@@ -1,0 +1,20 @@
+<% layout('simulador_layout') %>
+<h2><%= escenario.nombre %></h2>
+
+<!-- CAPA DEL COMPUTADOR PNG -->
+<div id="computador"></div>
+
+<!-- PANTALLA DONDE SE DEBE TRABAJAR -->
+<div id="pantalla">
+  <div id="contenido-mvp">
+    <!-- Aquí colocaremos el contenido del correo -->
+    <%= escenario.body %>
+  </div>
+</div>
+
+<!-- LUPA FUNCIONAL + PNG -->
+<div id="lupa"></div>
+<img src="/images/lupa.png" id="lupa-img" />
+
+<!-- MANO -->
+<img src="/images/mano.png" id="mano-img" />
