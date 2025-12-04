@@ -7,14 +7,27 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
-  overflow: hidden;
+  overflow-y: hidden;
   position: relative;
   font-family: Arial, sans-serif;
   cursor: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body::before {
+   content:"";
+   position:absolute;
+   inset:0;
+   background: rgba(0,0,0,0.25);
+   backdrop-filter: blur(2px);
+   z-index:-1;
 }
 
 /* === COMPUTADOR PNG SOBRE EL FONDO === */
-#computador {
+/*#computador {
   position: absolute;
   top: 0;
   left: 0;
@@ -26,19 +39,27 @@ body {
   background-position: center;
   pointer-events: none;
   z-index: 1;
-}
+}*/
 
 /* === ÁREA DE TRABAJO EN EL MONITOR === */
 #pantalla {
-  position: absolute;
+  /*position: absolute;
   top: 4%;
-  left: 18.3%;
-  width: 63%;
-  height: 69.5%;
+  left: 18.3%;*/
+  position: relative;
+  width: 90vw; /*63%;*/
+  max-width: 1300px;
+  height: 80vh; /*69.5%;*/
+  max-height:800px;
+  margin-bottom: 10vh;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.3);
+  box-shadow:
+    0 0 0 10px rgba(0,0,0,0.3),
+    0 0 20px rgba(0,0,0,0.35),
+    0 5px 50px rgba(0,0,0,0.45);
   z-index: 10;
-  border: 4px solid black;
   background: white;
 }
 
@@ -53,13 +74,15 @@ body {
   font-size: 28px;
   color: #333;
   user-select: none;
+  padding: 20px;
+
 }
 
 /* === LUPA (círculo de zoom) === */
 #lupa {
   position: absolute;
-  width: 180px;
-  height: 180px;
+  width: 18vmin;        /* tamaño proporcional */
+  height: 18vmin;
   border-radius: 50%;
   pointer-events: none;
 
@@ -67,9 +90,11 @@ body {
   background-size: cover;
   background-color: transparent;
 
-  border: 4px solid rgba(0, 255, 255, 0.8);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.4),
-    inset 0 0 10px rgba(255, 255, 255, 0.2);
+  border: 0.6vmin solid rgba(0, 255, 255, 0.8);
+  box-shadow:
+    0 0 1vmin rgba(0, 255, 255, 0.7),
+    0 0 2vmin rgba(0, 255, 255, 0.4),
+    inset 0 0 1vmin rgba(255, 255, 255, 0.2);
 
   backdrop-filter: brightness(1.2) contrast(1.1);
 
@@ -77,11 +102,11 @@ body {
   z-index: 50;
 }
 
+
 /* === PNG de la lupa === */
 #lupa-img {
   position: absolute;
-  width: 430px;
-  transform: translate(-43%, -34.5%);
+  width: 40vmin;        /* mantiene simetría con el círculo */
   pointer-events: none;
   display: none;
   z-index: 51;
@@ -96,3 +121,130 @@ body {
   display: none;
   z-index: 100;
 }
+
+
+
+#contenido-mvp {
+    width: 95%; /* Ocupa casi todo el ancho de la pantalla */
+    height: 100%;
+    /* Quita 'justify-content: center;' y 'align-items: center;' si quieres que el correo
+       empiece arriba y se extienda. */
+    display: block; /* Vuelve a display:block para contenido de texto normal */
+    font-size: 20px; /* Reduje el tamaño de fuente para que no se vea tan grande */
+    color: #333;
+    user-select: none;
+    overflow-y: auto; /* Permite scroll solo en el contenido del correo */
+}
+
+
+/* === ESTILOS DEL CORREO SIMULADO === */
+.correo {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  color: #333;
+  width: 90%;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px;
+}
+
+.correo h3 {
+  color: #c00;
+  margin-top: 10px;
+}
+
+.correo p {
+  margin: 10px 0;
+  line-height: 1.2;
+}
+
+.correo-boton {
+  text-align: center;
+  margin: 25px 0;
+}
+
+.btn-alerta {
+  display: inline-block;   /* vuelve a inline-block */
+  background-color: #ff6a00;
+  color: white;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  margin: 12px 0;
+}
+
+
+.correo-meta {
+  margin-bottom: 12px;
+}
+
+.correo-asunto {
+  font-weight: bold;
+  color: #000;
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.correo-remitente {
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+}
+
+.correo-remitente-mail {
+  color: black;
+  margin-left: 4px;
+  font-weight: bold;
+}
+
+.correo-logo-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 18px;
+}
+
+.correo-logo {
+  height: 60px; /* ajusta si quieres */
+}
+
+.correo-logo-text {
+  font-family: "poppins", sans-serif;
+  font-style: italic;
+  font-size: 40px;
+  font-weight: 800;
+  color: #ff6a00; /* tono naranjo BancoEstado aprox */
+}
+
+.correo-alineacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 14px 0 18px;
+}
+
+.correo-soporte {
+  text-align: right;
+  font-size: 24px;
+  color: #555;
+  line-height: 1.2;
+}
+
+.correo-soporte-num {
+  font-weight: bold;
+  font-size: 24px;
+  color: #ff6a00; /* color corporativo BancoEstado */
+}
+
+.correo-footer {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.correo-footer-logo {
+  width: 70%;          /* antes 100% */
+  max-width: 350px;    /* antes 450px */
+  display: block;
+  margin: 40px auto 10px; /* más espacio arriba, menos abajo */
+}
+
