@@ -1,60 +1,56 @@
 <% layout('simulador_layout') %>
 
+<!-- MONITOR SIMULADO (ÁREA INTERACTIVA) -->
+<div id="contenido-mvp">
 
-<div id="pantalla">
-  <div id="contenido-mvp">
-     <div class="correo">
+    <div class="correo">
         <div class="correo-meta">
-    <div class="correo-asunto">
-      ALERTA URGENTE: Bloqueo Preventivo de su Cuenta
+            <div class="correo-asunto">
+                ALERTA URGENTE: Bloqueo Preventivo de su Cuenta
+            </div>
+
+            <div class="correo-remitente">
+                BancoEstado
+                <span class="correo-remitente-mail">&lt;bancoestado@publimailer.cl&gt;</span>
+            </div>
+        </div>
+
+        <div class="correo-alineacion">
+            <div class="correo-logo-block">
+                <img src="/images/LogoBancoEstado.png" alt="BancoEstado" class="correo-logo" />
+                <span class="correo-logo-text">BancoEstado</span>
+            </div>
+
+            <div class="correo-soporte">
+                <span>Soporte </span>
+                <span class="correo-soporte-num">600 400 7000</span>
+            </div>
+        </div>
+
+        <p>Estimado cliente,</p>
+
+                <p>Hemos detectado un intento de inicio de sesión inusual en su banca en línea desde un dispositivo no reconocido.</p>
+                <p>Por su seguridad, hemos aplicado un <strong>bloqueo preventivo</strong> a su cuenta terminada en <strong>–4821</strong>.</p>
+                <p>Para evitar la <strong>suspención definitiva</strong> de sus servicios, verifique su identidad dentro de las próximas <strong>24 horas</strong>.</p>
+                <p>Por favor haga clic en el siguiente botón seguro y complete el proceso de verificación:</p>
+        <div class="correo-boton">
+            <a href="http://bancoestado-seguridad.cl/validacion" class="btn-alerta">
+                Verificar mi cuenta
+            </a>
+        </div>
+
+        <p>Si ya realizó esta verificación, puede ignorar este mensaje.</p>
+
+        <div class="correo-footer">
+            <img src="/images/bancoestado-footer.png" class="correo-footer-logo" />
+        </div>
     </div>
 
-    <div class="correo-remitente">
-      BancoEstado
-      <span class="correo-remitente-mail">&lt;bancoestado@publimailer.cl&gt;</span>
-    </div>
-  </div>
-
-  <div class="correo-alineacion">
-
-  <div class="correo-logo-block">
-      <img src="/images/LogoBancoEstado.png" alt="BancoEstado" class="correo-logo" />
-      <span class="correo-logo-text">BancoEstado</span>
-  </div>
-
-  <div class="correo-soporte">
-      <span>Soporte </span>
-      <span class="correo-soporte-num">600 400 7000</span>
-  </div>
+    <!-- 👇 LUPA DENTRO DEL MONITOR -->
+    <div id="lupa"></div>
+    <img src="/images/lupa.png" id="lupa-img">
 
 </div>
 
-
-  <p>Estimado cliente,</p>
-  <p>Hemos detectado un intento de inicio de sesión inusual en su banca en línea desde un dispositivo no reconocido.</p>
-  <p>Por su seguridad, hemos aplicado un <strong>bloqueo preventivo</strong> a su cuenta terminada en <strong>–4821</strong>.</p>
-  <p>Para evitar la <strong>suspención definitiva</strong> de sus servicios, verifique su identidad dentro de las próximas <strong>24 horas</strong>.</p>
-  <p>Por favor haga clic en el siguiente botón seguro y complete el proceso de verificación:</p>
-
-  <div class="correo-boton">
-  <a href="http://bancoestado-seguridad.cl/validacion" class="btn-alerta">
-    Verificar mi cuenta
-  </a>
-</div>
-
-  <p>Si ya realizó esta verificación, puede ignorar este mensaje.</p>
-  <p>Atentamente,<br>Equipo de Seguridad<br>BancoEstado</p>
-  
-
-  <div class="correo-footer">
-    <img src="/images/bancoestado-footer.png" alt="BancoEstado" class="correo-footer-logo" />
-</div>
-  </div>
-</div>
-
-<div id="lupa"></div>
-<img src="/images/lupa.png" id="lupa-img" />
-
-<img src="/images/mano.png" id="mano-img" />
-
-
+<!-- 👇 MANO (cursor falso fuera del monitor) -->
+<img src="/images/mano.png" id="mano-img">
