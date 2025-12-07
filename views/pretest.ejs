@@ -1,0 +1,103 @@
+<% layout('simulador_layout') %>
+
+<div class = "test-contenedor">
+    <h2 class="test-titulo">Test Inicial</h2>
+    <form action="/pretest" method="POST" class="test-formulario">
+        <!-- Pregunta 1-->
+         <div class = "pregunta">
+            <p>1. Llega un correo de tu banco indicando que debes cambiar tu contraseña URGENTE. ¿Qué harías?</p>
+            <label class="opcion"><input type= "radio" name="p1" value="A"> a. Ignoro el correo y nunca ingreso mi clave por ese medio.</label>
+            <label class="opcion"><input type= "radio" name="p1" value="B"> b. Uso el botón que aparece en el correo para cambiar mi contraseña.</label>
+            <label class="opcion"><input type= "radio" name="p1" value="C"> c. Solo doy mi usuario pero no la contraseña</label>
+         </div>
+
+        <!-- Pregunta 2-->
+            <div class = "pregunta">
+                <p>2. ¿Cómo identificar si un correo es una estafa? (Selecciona las correctas)</p>
+                <label class ="opcion"><input type="checkbox" name="p2" value="remitente"> Revisar el remitente del correo.</label>
+                <label class ="opcion"><input type="checkbox" name="p2" value="urgente"> Sospechar si el correo solicita acciones urgentes.</label>
+                <label class ="opcion"><input type="checkbox" name="p2" value="logo"> Confiar siempre en el correo que tiene el logo de mi banco</label>
+                <label class ="opcion"><input type="checkbox" name="p2" value="ortografia"> Verficar si el texto contiene faltas de ortografía.</label>
+            </div>
+
+        <!-- Pregunta 3 verdadero/Falso-->
+            <div class = "pregunta">
+                <p>3. Si tu computador tiene el mejor antivirus del mercado, ¿Puedes hacer clic en cualquier enlace sin preocuparte?</p>
+                <label class="opcion"><input type="radio" name="p3" value="V"> Verdadero</label>
+                <label class="opcion"><input type="radio" name="p3" value="F"> Falso</label>
+            </div>
+
+        <!-- Pregunta 4 Likert emocional-->
+            <div class="pregunta">
+    <p>4. ¿Cómo te sientes si recibes un correo de tu banco pidiendo cambiar la clave con urgencia?</p>
+
+    <div class="likert-grid">
+        <label class="likert-opcion">
+            <input type="radio" name="p4" value="1">
+            <span class="emoji">😎</span>
+            <span class="texto">Muy tranquilo(a)</span>
+        </label>
+
+        <label class="likert-opcion">
+            <input type="radio" name="p4" value="2">
+            <span class="emoji">😊</span>
+            <span class="texto">Tranquilo(a)</span>
+        </label>
+
+        <label class="likert-opcion">
+            <input type="radio" name="p4" value="3">
+            <span class="emoji">😐</span>
+            <span class="texto">Neutro</span>
+        </label>
+
+        <label class="likert-opcion">
+            <input type="radio" name="p4" value="4">
+            <span class="emoji">😥</span>
+            <span class="texto">Preocupado(a)</span>
+        </label>
+
+        <label class="likert-opcion">
+            <input type="radio" name="p4" value="5">
+            <span class="emoji">😩</span>
+            <span class="texto">Muy ansioso</span>
+        </label>
+    </div>
+</div>
+        <!-- Pregunta 5 Likert emocional-->
+            <div class = "pregunta">
+                <p>5. ¿Qué tan preparado(a) se siente para identificar fraudes por internet?</p>
+                <div class="likert-grid">
+                    <label class="likert-opcion">
+                        <input type="radio" name="p5" value="1">
+                        <span class="emoji">😎</span>
+                        <span class="texto">Muy Preparado(a)</span>
+                    </label>
+                    <label class="likert-opcion">
+                        <input type="radio" name="p5" value="2">
+                        <span class="emoji">😊</span>
+                        <span class="texto">Preparado(a)</span>
+                    </label>
+                    <label class="likert-opcion">
+                        <input type="radio" name="p5" value="3">
+                        <span class="emoji">😐</span>
+                        <span class="texto">Neutro</span>
+                    </label>
+                    <label class="likert-opcion">
+                        <input type="radio" name="p5" value="4">
+                        <span class="emoji">😥</span>
+                        <span class="texto">Poco Preparado</span>
+                    </label>
+                    <label class="likert-opcion">
+                        <input type="radio" name="p5" value="5">
+                        <span class="emoji">😩</span>
+                        <span class="texto">Nada Preparado(a)</span>
+                    </label>
+                </div>
+                
+            </div>
+
+         <!-- Botón enviar -->
+        <button type="submit" class="continuar-btn">Enviar y continuar</button>
+    </form>
+            
+</div>

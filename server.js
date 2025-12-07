@@ -9,6 +9,7 @@ const port = 3000;
 
 // --- CONFIGURACIÓN DEL MOTOR DE VISTAS ---
 app.engine("ejs", engine);
+app.locals._layoutFile = 'simulador_layout';
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -44,8 +45,31 @@ const Escenario = require("./models/Escenario");
 
 app.get("/correo", async (req, res) => {
   const escenario = await Escenario.findOne();
-  res.render("correo", { title: "Simulador", escenario });
+  // AGREGAMOS bodyClass: "simulador" AQUÍ
+  res.render("correo", { 
+      title: "Simulador", 
+      escenario, 
+      bodyClass: "simulador" 
+  });
 });
+
+// RUTA DEL PRETEST
+app.get("/pretest", async(req, res) => {
+  // AGREGAMOS bodyClass: "pretest" AQUÍ
+  res.render("pretest", { 
+      title: "Test Conocimientos Iniciales", 
+      bodyClass: "pretest" 
+  });
+});
+
+// RUTA DEL POSTTEST
+app.get("/posttest", (req, res) => {
+  res.render("posttest", { 
+      title: "Test Final", 
+      bodyClass: "posttest" // <--- Esto activará el CSS de arriba
+  });
+});
+
 
 // --- INICIO DEL SERVIDOR ---
 app.listen(port, () => {

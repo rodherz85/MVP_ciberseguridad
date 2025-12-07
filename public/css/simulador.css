@@ -1,24 +1,43 @@
-/* === FONDO DEL ESCENARIO GENERAL === */
+/* === CONFIGURACIÓN GENERAL DEL SITIO === */
 body {
   margin: 0;
   padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* === FONDO DEL ESCENARIO DEL SIMULADOR === */
+body.simulador {
   background-image: url("/images/fraude.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
   overflow: hidden;
-  position: relative;
-  font-family: Arial, sans-serif;
   cursor: none;
 
-  /* Centra el área del correo */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Oscurecimiento + blur opcional */
+/* === FONDO ESPECIAL PARA PRETEST (o cualquier test) === */
+body.pretest, body.posttest {
+  background-image: url("/images/pretest.png"); /* Cambia este nombre */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 40px;
+
+  cursor: default !important; /* Cursor normal */
+  overflow: auto;
+}
+
+/* Oscurecimiento + blur opcional 
 body::before {
   content: "";
   position: absolute;
@@ -26,17 +45,17 @@ body::before {
   background: rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(2px);
   z-index: -1;
-}
+}*/
 
 /* ==================================================
-   ÁREA INTERACTIVA (correo) — ÚNICO CONTENEDOR
+   ÁREA INTERACTIVA (correo)
    ================================================== */
 #contenido-mvp {
-  position: relative; /* NECESARIO para posicionar lupa dentro */
+  position: relative;
   width: 90vw;
   max-width: 1300px;
-  height: 70vh;
-  max-height: 700px;
+  height: 75vh;
+  max-height: 750px;
 
   background: white;
   border-radius: 12px;
@@ -54,50 +73,33 @@ body::before {
 
   font-size: 20px;
   color: #333;
-  margin-top: -100px;
+  margin-top: -80px;
+
+  cursor: none !important; /* oculta el mouse dentro */
 }
 
+/* Ocultar scrollbars */
+#contenido-mvp::-webkit-scrollbar { width: 0; height: 0; }
+#contenido-mvp { scrollbar-width: none; overflow-x: hidden; }
+
 /* ==================================================
-   LUPA — CÍRCULO DE ZOOM
+   LUPA — ÚNICA IMAGEN
    ================================================== */
-#lupa {
-  position: absolute; /* relativo a #contenido-mvp */
-  width: 18vmin;
-  height: 18vmin;
-  border-radius: 50%;
-  pointer-events: none;
-  display: none;
-  overflow: hidden;
-
-  border: 0.6vmin solid rgba(0, 255, 255, 0.8);
-  box-shadow:
-    0 0 1vmin rgba(0,255,255,0.7),
-    0 0 2vmin rgba(0,255,255,0.4),
-    inset 0 0 1vmin rgba(255,255,255,0.2);
-
-  background-repeat: no-repeat;
-  background-color: transparent;
-
-  backdrop-filter: brightness(1.2) contrast(1.1);
-
-  z-index: 30;
-}
-
-/* Marco PNG de la lupa */
 #lupa-img {
-  position: absolute; /* relativo a #contenido-mvp */
-  width: 40vmin;
+  position: fixed;
+  width: 120px;         /* tamaño final de la lupa */
   pointer-events: none;
+  transform: translate(-50%, -50%);
   display: none;
-  z-index: 31;
+  z-index: 9999;
 }
 
 /* ==================================================
-   MANO (cursor falso FUERA del área interactiva)
+   MANO — cursor fuera del área
    ================================================== */
 #mano-img {
-  position: fixed; /* para seguir el ratón global */
-  width: 120px;
+  position: fixed;
+  width: 100px;
   pointer-events: none;
   transform: translate(-50%, -50%);
   display: none;
@@ -117,18 +119,9 @@ body::before {
   padding: 20px;
 }
 
-.correo h3 {
-  color: #c00;
-  margin-top: 10px;
-}
-
 .correo p {
   margin: 10px 0;
   line-height: 1.8;
-}
-
-.correo-boton {
-  text-align: center;
 }
 
 .btn-alerta {
@@ -139,17 +132,32 @@ body::before {
   padding: 10px 18px;
   border-radius: 6px;
   margin: 12px 0;
+  text-align: center;
+  cursor: none !important;
+  transition: 
+      box-shadow 0.25s ease,
+      outline 0.25s ease,
+      background 0.25s ease,
+      transform 0.25s ease;
 }
 
+.correo-boton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* METADATOS DEL CORREO */
 .correo-meta {
-  margin-bottom: 12px;
+  margin-bottom: 4px;
+  line-height: 1.2;
 }
 
 .correo-asunto {
   font-weight: bold;
   color: #000;
   font-size: 20px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .correo-remitente {
@@ -163,9 +171,7 @@ body::before {
   font-weight: bold;
 }
 
-/* ==================================================
-   BLOQUE DEL LOGO — CORRECCIÓN DEL LOGO GIGANTE
-   ================================================== */
+/* LOGO BLOQUE */
 .correo-logo-block {
   display: flex;
   align-items: center;
@@ -173,26 +179,21 @@ body::before {
   margin: 14px 0 18px;
 }
 
-/* AQUÍ ESTABA TU PROBLEMA ↓↓↓ */
 .correo-logo {
-  max-width: 50px;   /* evita desbordes */
-  height: auto;       /* mantiene proporción */
+  max-width: 50px;
+  height: auto;
   object-fit: contain;
-  display: block;
 }
 
-/* Texto del logo */
 .correo-logo-text {
   font-family: "poppins", sans-serif;
   font-style: italic;
-  font-size: 32px;   /* reducido para que no compita con el logo */
+  font-size: 32px;
   font-weight: 800;
   color: #ff6a00;
 }
 
-/* ==================================================
-   ALINEACIÓN CORREO
-   ================================================== */
+/* SOPORTE */
 .correo-alineacion {
   display: flex;
   justify-content: space-between;
@@ -213,30 +214,300 @@ body::before {
   color: #ff6a00;
 }
 
-/* ==================================================
-   FOOTER
-   ================================================== */
+/* FOOTER */
 .correo-footer {
-  margin-top: 40px;
+  margin-top: 10px;
   text-align: center;
 }
+
+.footer-legal {
+    font-size: 12px;
+    color: #777;
+    text-align: center;
+    margin-top: -10px; /* ajusta si quieres que quede más cerca del footer */
+}
+
 
 .correo-footer-logo {
   width: 70%;
   max-width: 350px;
   display: block;
-  margin: 30px auto;
+  margin: 10px auto;
 }
 
-/* Oculta scrollbars visuales en Chrome, Edge, Safari */
-#contenido-mvp::-webkit-scrollbar {
-    width: 0 !important;
-    height: 0 !important;
+/* ==================================================
+   EFECTO DETECTIVE (HOVER SOSPECHOSO)
+   ================================================== */
+.sospechoso {
+    transition:
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        outline 0.25s ease,
+        transform 0.25s ease,
+        color 0.25s ease;
+    border-radius: 4px;
 }
 
-/* Oculta scrollbar visual en Firefox */
-#contenido-mvp {
-    scrollbar-width: none !important;
-    overflow-x: hidden !important;
+/* 🟩 MODO DETECTIVE HACKER — versión refinada */
+.sospechoso.hover-detectado {
+    background-color: #1a1200;                        /* Negro cálido */
+    color: #ffeb99 !important;                        /* Amarillo suave */
+    font-family: "Courier New", monospace !important;
+    letter-spacing: 1px;
+
+    outline: 2px solid #ffcc66;                       /* Ámbar elegante */
+    box-shadow:
+        0 0 8px rgba(255, 204, 102, 0.7),
+        inset 0 0 5px rgba(255, 204, 102, 0.4);
+
+    transform: scale(1.05);
 }
 
+
+
+.sospechoso-boton.hover-detectado {
+    outline: 2px solid #ffcc66;     
+    box-shadow:
+        0 0 12px rgba(255, 204, 102, 0.8),
+        inset 0 0 5px rgba(255, 204, 102, 0.4);
+    transform: scale(1.04);
+}
+
+.btn-alerta.sospechoso.hover-detectado {
+    background-color: #1a1200;                        /* Negro cálido */
+    color: #ffeb99 !important;                        /* Amarillo suave */
+    font-family: "Courier New", monospace !important;
+    font-weight: bold;
+    letter-spacing: 1px;
+
+    outline: 2px solid #ffcc66;
+    box-shadow:
+        0 0 8px rgba(255, 204, 102, 0.7),
+        inset 0 0 5px rgba(255, 204, 102, 0.4);
+    
+    transform: scale(1.015);                           /* Mucho más suave */
+}
+
+/* =========================================
+   TOOLTIP TIPO VENTANA
+========================================= */
+.tooltip-ventana {
+position: fixed;
+    background: #2c3e50;       /* Azul Petróleo / Slate */
+    color: #ecf0f1;            /* Blanco hueso */
+    padding: 18px;
+    width: 320px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(44, 62, 80, 0.4);
+    z-index: 9000;
+    border-left: 5px solid #3498db; /* Azul más claro para el borde */
+    font-family: Arial, sans-serif;
+}
+
+.tooltip-ventana.oculto {
+    display: none;
+}
+
+.tooltip-pregunta {
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.tooltip-botones {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 12px;
+}
+
+.tooltip-btn {
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn-si {
+    background: #ff6a00;
+    color: white;
+}
+.btn-si:hover { background: #d85a00; }
+
+.btn-no {
+    background: #555;
+    color: white;
+}
+.btn-no:hover { background: #333; }
+
+.tooltip-feedback {
+    background: #34495e;       /* Un tono un poco más claro que el fondo */
+    border-left: 4px solid #3498db;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+.tooltip-cerrar {
+    background: #777;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+.tooltip-cerrar:hover { background: #555; }
+
+.tooltip-ventana,
+.tooltip-ventana * {
+    cursor: default !important;   /* cursor tradicional flecha */
+}
+
+.tooltip-botones button,
+.tooltip-cerrar {
+    cursor: pointer !important;   /* mantiene la manito en botones */
+}
+
+
+/* ==================================================
+   ESTILOS DEL TEST
+   ================================================== */
+
+.test-contenedor {
+  width: 90%;
+  max-width: 750px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.25);
+  margin-bottom: 40px;
+}
+
+.test-titulo {
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+.pregunta {
+  margin-bottom: 25px;
+}
+
+.pregunta p {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #222;
+}
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  font-size: 17px;
+  color: #444;
+  cursor: pointer;
+}
+
+.opcion input {
+  transform: scale(1.2);
+  margin-right: 8px;
+  cursor: pointer;
+}
+.continuar-btn {
+  padding: 14px;
+  background: #3498db;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+}
+
+.continuar-btn:hover {
+  background: #2c80bb;
+}
+
+.opcion img,
+.opcion span {
+  font-size: 22px;
+}
+
+/* === ESCALA LIKERT EN GRID HORIZONTAL === */
+
+.likert-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 opciones */
+  gap: 10px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.likert-opcion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+.likert-opcion input {
+  margin-bottom: 6px;
+  transform: scale(1.3);
+  cursor: pointer;
+}
+
+.emoji {
+  font-size: 48px;
+  margin-bottom: 5px;
+}
+
+.texto {
+  font-size: 15px;
+}
+
+/* OPCIONAL: EFECTO VISUAL AL PASAR EL MOUSE */
+.likert-opcion:hover {
+  background: rgba(0,0,0,0.05);
+  border-radius: 10px;
+}
+
+/* OPCIONAL: CUANDO SE SELECCIONA */
+.likert-opcion input:checked + .emoji {
+  filter: drop-shadow(0 0 4px orange);
+}
+.pregunta-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.rating-group {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+}
+
+/* 1. ESTADO BASE (GRIS) */
+.star {
+    font-size: 32px;
+    color: #e4e5e9; /* Gris claro */
+    transition: color 0.2s ease;
+    line-height: 1;
+    user-select: none; /* Evita que se seleccione el texto al hacer click rápido */
+}
+
+/* 2. ESTADO ACTIVO (AMARILLO) - ¡ESTA ES LA CLAVE! */
+/* Si el JS agrega 'resaltada', el CSS debe tener '.resaltada' */
+.star.resaltada {
+    color: #ffc107; /* Dorado */
+    transform: scale(1.1); /* Pequeño efecto pop */
+}

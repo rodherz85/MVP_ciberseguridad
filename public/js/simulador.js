@@ -1,68 +1,172 @@
+/* =============================================================
+   ELEMENTOS PRINCIPALES
+============================================================= */
 const contenido = document.getElementById("contenido-mvp");
-const lupa = document.getElementById("lupa");
 const lupaImg = document.getElementById("lupa-img");
 const manoImg = document.getElementById("mano-img");
 
-document.addEventListener("mousemove", e => {
+/* =============================================================
+   ELEMENTOS DEL TOOLTIP
+============================================================= */
+const tooltip = document.getElementById("tooltip-pista");
+const tooltipPregunta = tooltip.querySelector(".tooltip-pregunta");
+const tooltipFeedback = tooltip.querySelector(".tooltip-feedback");
+const btnSi = tooltip.querySelector(".btn-si");
+const btnNo = tooltip.querySelector(".btn-no");
+const btnCerrar = tooltip.querySelector(".tooltip-cerrar");
 
-  const rect = contenido.getBoundingClientRect();
+let ultimoSospechoso = null;
+let timerDelay = null;
+let freeze = false;
 
-  const inside =
-    e.clientX >= rect.left &&
-    e.clientX <= rect.right &&
-    e.clientY >= rect.top &&
-    e.clientY <= rect.bottom;
+/* =============================================================
+   MOSTRAR TOOLTIP (NUEVA LÓGICA)
+============================================================= */
+function mostrarTooltip(elemento, pregunta) {
+    freeze = true;
 
-  const relX = e.clientX - rect.left;
-  const relY = e.clientY - rect.top;
+    tooltipPregunta.textContent = pregunta;
 
-  const lupaSize = lupa.offsetWidth;
-  const half = lupaSize / 2;
+    // REINICIAR feedback CADA VEZ
+    tooltipFeedback.textContent = "";  
+    tooltipFeedback.classList.add("oculto");
 
-  if (inside) {
-    lupa.style.display = "block";
-    lupaImg.style.display = "block";
-    manoImg.style.display = "none";
+    const rect = elemento.getBoundingClientRect();
+    const margin = 10;
 
-    // === LIMITAMOS LA POSICIÓN REAL PARA EL CÍRCULO DE LA LUPA ===
-    const maxX = contenido.clientWidth  - lupaSize;
-    const maxY = contenido.clientHeight - lupaSize;
+    tooltip.classList.remove("oculto");
+    const tipWidth = tooltip.offsetWidth;
+    const tipHeight = tooltip.offsetHeight;
+    tooltip.classList.add("oculto");
 
-    let posX = relX - half;
-    let posY = relY - half;
+    const left = rect.left + rect.width / 2 - tipWidth / 2;
 
-    // limitar dentro del contenedor
-    posX = Math.max(0, Math.min(posX, maxX));
-    posY = Math.max(0, Math.min(posY, maxY));
+    let top = rect.bottom + margin;
 
-    // aplicar posición al círculo
-    lupa.style.left = posX + "px";
-    lupa.style.top  = posY + "px";
+    if (elemento.dataset.pos === "footer") {
+        const extraOffset = 40;
+        top = rect.top - tipHeight - margin - extraOffset;
+    }
 
-    // ===========================================================
-    // POSICIONAR EL PNG EXACTAMENTE CENTRADO SOBRE EL CÍRCULO
-    // ===========================================================
-    const marcoSize = lupaImg.offsetWidth;
+    tooltip.style.left = left + "px";
+    tooltip.style.top = top + "px";
 
-    const marcoOffsetX = marcoSize * 0.43; // mismos valores que tú usabas
-    const marcoOffsetY = marcoSize * 0.34;
+    tooltip.classList.remove("oculto");
+    elemento.classList.add("hover-detectado");
+}
 
-    // nueva fórmula: el PNG se basa SOLO en posX y posY (posición corregida)
-    const marcoX = posX + half - marcoOffsetX;
-    const marcoY = posY + half - marcoOffsetY;
+/* =============================================================
+   OCULTAR TOOLTIP
+============================================================= */
+function cerrarTooltip() {
+    tooltip.classList.add("oculto");
+    tooltipFeedback.classList.add("oculto");
 
-    lupaImg.style.left = marcoX + "px";
-    lupaImg.style.top  = marcoY + "px";
+    if (ultimoSospechoso) {
+        ultimoSospechoso.classList.remove("hover-detectado");
+        ultimoSospechoso = null;
+    }
 
-    // fondo de lupa
-    lupa.style.backgroundImage = "inherit";
-    return;
-  }
+    freeze = false;
+}
 
-  lupa.style.display = "none";
-  lupaImg.style.display = "none";
+btnSi.onclick = () => {
+    tooltipFeedback.textContent = window.pistaActual.si;
+    tooltipFeedback.classList.remove("oculto");
+};
 
-  manoImg.style.display = "block";
-  manoImg.style.left = e.clientX + "px";
-  manoImg.style.top  = e.clientY + "px";
+btnNo.onclick = () => {
+    tooltipFeedback.textContent = window.pistaActual.no;
+    tooltipFeedback.classList.remove("oculto");
+};
+
+btnCerrar.onclick = cerrarTooltip;
+
+/* =============================================================
+   FUNCIÓN: MOSTRAR PREGUNTA
+============================================================= */
+function mostrarPregunta(elemento) {
+    const pregunta = "¿Esto te parece sospechoso o fraudulento?";
+
+    window.pistaActual = {
+        elemento: elemento,
+        si: elemento.dataset.feedbackSi,
+        no: elemento.dataset.feedbackNo
+    };
+
+    mostrarTooltip(elemento, pregunta);
+}
+
+/* =============================================================
+   DETECCIÓN LUPA
+============================================================= */
+document.addEventListener("mousemove", (e) => {
+
+    if (freeze) {
+        lupaImg.style.left = e.clientX + "px";
+        lupaImg.style.top = e.clientY + "px";
+        return;
+    }
+
+    const rect = lupaImg.getBoundingClientRect();
+    const centroX = e.clientX;
+    const centroY = e.clientY - rect.height * 0.25;
+
+    lupaImg.style.display = "none";
+    const elementoBajoLupa = document.elementFromPoint(centroX, centroY);
+    const dentro = contenido.contains(elementoBajoLupa);
+
+    if (dentro) {
+        lupaImg.style.display = "block";
+        lupaImg.style.left = e.clientX + "px";
+        lupaImg.style.top = e.clientY + "px";
+
+        manoImg.style.display = "none";
+
+        const radio = 40;
+        let detectado = null;
+
+        for (let ang = 0; ang < Math.PI * 2; ang += Math.PI / 6) {
+            const px = centroX + Math.cos(ang) * radio;
+            const py = centroY + Math.sin(ang) * radio;
+            const elem = document.elementFromPoint(px, py);
+
+            if (elem && elem.closest(".sospechoso")) {
+                detectado = elem.closest(".sospechoso");
+                break;
+            }
+        }
+
+        if (detectado !== ultimoSospechoso) {
+            clearTimeout(timerDelay);
+
+            if (ultimoSospechoso)
+                ultimoSospechoso.classList.remove("hover-detectado");
+
+            ultimoSospechoso = detectado;
+
+            if (detectado) {
+                timerDelay = setTimeout(() => {
+                    if (ultimoSospechoso === detectado) {
+                        mostrarPregunta(detectado);
+                    }
+                }, 850);
+            }
+        }
+
+    } else {
+        lupaImg.style.display = "none";
+        clearTimeout(timerDelay);
+
+        if (ultimoSospechoso) {
+            ultimoSospechoso.classList.remove("hover-detectado");
+            ultimoSospechoso = null;
+        }
+
+        manoImg.style.display = "block";
+        manoImg.style.left = e.clientX + "px";
+        manoImg.style.top = e.clientY + "px";
+    }
 });
+
+

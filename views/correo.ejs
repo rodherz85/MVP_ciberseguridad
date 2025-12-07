@@ -1,56 +1,139 @@
 <% layout('simulador_layout') %>
 
+<!-- TOOLTIP INTERACTIVO GLOBAL -->
+<div id="tooltip-pista" class="tooltip-ventana oculto">
+    <div class="tooltip-pregunta"></div>
+
+    <div class="tooltip-botones">
+        <button class="tooltip-btn btn-si">Sí</button>
+        <button class="tooltip-btn btn-no">No</button>
+    </div>
+
+    <div class="tooltip-feedback oculto"></div>
+
+    <button class="tooltip-cerrar">Cerrar</button>
+</div>
+
 <!-- MONITOR SIMULADO (ÁREA INTERACTIVA) -->
 <div id="contenido-mvp">
 
     <div class="correo">
+
+        <!-- ===== META (ASUNTO + REMITENTE) ===== -->
         <div class="correo-meta">
+
             <div class="correo-asunto">
-                ALERTA URGENTE: Bloqueo Preventivo de su Cuenta
+                <span class="sospechoso"
+                    data-feedback-si="¡Correcto! Los asuntos que transmiten urgencia o amenazas suelen ser indicativos de correos fraudulentos."
+                    data-feedback-no="En realidad este asunto sí es sospechoso porque los bancos no usan mensajes alarmantes.">
+                    ALERTA URGENTE: Bloqueo Preventivo de su Cuenta
+                </span>
             </div>
 
             <div class="correo-remitente">
                 BancoEstado
-                <span class="correo-remitente-mail">&lt;bancoestado@publimailer.cl&gt;</span>
+                <span class="correo-remitente-mail sospechoso"
+                    data-feedback-si="¡Correcto! El dominio del remitente no corresponde a un sitio oficial del banco."
+                    data-feedback-no="Este remitente es sospechoso. Los bancos no usan correos desde dominios como publimailer.cl, solo de su sitio oficial.">
+                    &lt;bancoestado@publimailer.cl&gt;
+                </span>
             </div>
+
         </div>
 
+        <!-- ===== LOGO + SOPORTE ===== -->
         <div class="correo-alineacion">
+
             <div class="correo-logo-block">
                 <img src="/images/LogoBancoEstado.png" alt="BancoEstado" class="correo-logo" />
                 <span class="correo-logo-text">BancoEstado</span>
             </div>
 
             <div class="correo-soporte">
-                <span>Soporte </span>
-                <span class="correo-soporte-num">600 400 7000</span>
+                <span>Ayuda Soporte </span>
+                <span class="correo-soporte-num sospechoso" data-pos="left"
+                    data-feedback-si="¡Correcto! Los números de soporte que no coinciden con los oficiales del banco son sospechosos."
+                    data-feedback-no="Este número es sospechoso. Los bancos no usan números como este para soporte.">
+                    +569 5134590
+                </span>
             </div>
+
         </div>
 
-        <p>Estimado cliente,</p>
+        <!-- ===== SALUDO GENÉRICO ===== -->
+        <p>
+            <span class="sospechoso"
+                data-feedback-si="¡Correcto! Los bancos oficiales suelen dirigirse por tu nombre y no con saludos genéricos como 'Estimado cliente'."
+                data-feedback-no="En realidad, los bancos oficiales suelen dirigirse por tu nombre y no con saludos genéricos como 'Estimado cliente'.">
+                Estimado cliente,
+            </span>
+        </p>
 
-                <p>Hemos detectado un intento de inicio de sesión inusual en su banca en línea desde un dispositivo no reconocido.</p>
-                <p>Por su seguridad, hemos aplicado un <strong>bloqueo preventivo</strong> a su cuenta terminada en <strong>–4821</strong>.</p>
-                <p>Para evitar la <strong>suspención definitiva</strong> de sus servicios, verifique su identidad dentro de las próximas <strong>24 horas</strong>.</p>
-                <p>Por favor haga clic en el siguiente botón seguro y complete el proceso de verificación:</p>
+        <!-- ===== TEXTO NO SOSPECHOSO ===== -->
+        <p>
+            Hemos detectado un intento de inicio de sesión inusual en su banca en línea desde un dispositivo no reconocido.
+        </p>
+
+        <p>
+            Por su seguridad, hemos aplicado un <strong>bloqueo preventivo</strong> a su cuenta terminada en
+            <strong>–4821</strong>.
+        </p>
+
+        <!-- ===== ORTOGRAFÍA + URGENCIA ===== -->
+        <p>
+            Para evitar la <strong>
+                <span class="sospechoso"
+                    data-feedback-si="¡Correcto! Las faltas de ortografía suelen ser indicativos de fraudes."
+                    data-feedback-no="Los correos oficiales están correctamente escritos, no tienen faltas de ortografía.">
+                    suspención
+                </span> definitiva
+            </strong>
+            de sus servicios,
+            <span class="sospechoso"
+                data-feedback-si="¡Correcto! Los correos que solicitan acciones urgentes suelen ser fraudulentos."
+                data-feedback-no="Este mensaje es sospechoso. Los correos oficiales no suelen pedir acciones urgentes.">
+                verifique su identidad dentro de las próximas <strong>24 horas</strong>.
+            </span>
+        </p>
+
+        <!-- ===== BOTÓN SOSPECHOSO ===== -->
+        <p>
+            Por favor haga clic en el siguiente botón seguro y complete el proceso de verificación:
+        </p>
+
         <div class="correo-boton">
-            <a href="http://bancoestado-seguridad.cl/validacion" class="btn-alerta">
+            <a class="btn-alerta sospechoso"
+                data-feedback-si="¡Correcto! Los bancos nunca piden verificar la cuenta desde un botón en un correo. La única forma segura es ingresar manualmente al sitio oficial."
+                data-feedback-no="Este botón es sospechoso. Los bancos no utilizan enlaces en correos para pedir verificaciones; debes ingresar por tu navegador al sitio oficial.">
                 Verificar mi cuenta
             </a>
         </div>
 
+        <!-- ===== RESTO DEL CONTENIDO ===== -->
         <p>Si ya realizó esta verificación, puede ignorar este mensaje.</p>
 
+        <p>Atentamente,<br>Equipo de Seguridad BancoEstado</p>
+
+        <!-- ===== FOOTER ===== -->
         <div class="correo-footer">
             <img src="/images/bancoestado-footer.png" class="correo-footer-logo" />
         </div>
+
+        <p class="footer-legal">
+            <span class="sospechoso" data-pos="footer"
+                data-feedback-si="¡Bien visto! Los estafadores a veces copian textos legales en inglés para que parezca un mensaje serio. También verifica el año incorrecto."
+                data-feedback-no="Este aviso no es oficial. Un banco real no mezcla idiomas ni usa textos legales genéricos sacados de Internet.">
+                Copyright © 2019 BancoState.
+            </span>
+            Todos los derechos reservados.<br>
+        </p>
+
     </div>
 
-    <!-- 👇 LUPA DENTRO DEL MONITOR -->
-    <div id="lupa"></div>
+    <!-- LUPA -->
     <img src="/images/lupa.png" id="lupa-img">
 
 </div>
 
-<!-- 👇 MANO (cursor falso fuera del monitor) -->
+<!-- CURSOR MANO (solo fuera del correo) -->
 <img src="/images/mano.png" id="mano-img">

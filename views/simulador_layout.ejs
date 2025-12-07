@@ -3,14 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
+    
+    <title><%= typeof title != 'undefined' ? title : 'Simulador' %></title>
 
     <link rel="stylesheet" href="/css/simulador.css" />
 
-    <!-- ✅ Agregar html2canvas AQUÍ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    <!-- ✅ Tu script debe cargarse DESPUÉS de html2canvas -->
     <script defer src="/js/simulador.js"></script>
 
     <style>
@@ -21,7 +20,8 @@
       }
     </style>
   </head>
-  <body>
+
+  <body class="<%= typeof bodyClass != 'undefined' ? bodyClass : '' %>">
     <%- body %>
   </body>
 </html>
