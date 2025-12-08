@@ -24,6 +24,7 @@
 
             <div class="correo-asunto">
                 <span class="sospechoso"
+                    data-id="asunto"
                     data-feedback-si="¡Correcto! Los asuntos que transmiten urgencia o amenazas suelen ser indicativos de correos fraudulentos."
                     data-feedback-no="En realidad este asunto sí es sospechoso porque los bancos no usan mensajes alarmantes.">
                     ALERTA URGENTE: Bloqueo Preventivo de su Cuenta
@@ -33,6 +34,7 @@
             <div class="correo-remitente">
                 BancoEstado
                 <span class="correo-remitente-mail sospechoso"
+                    data-id="remitente"
                     data-feedback-si="¡Correcto! El dominio del remitente no corresponde a un sitio oficial del banco."
                     data-feedback-no="Este remitente es sospechoso. Los bancos no usan correos desde dominios como publimailer.cl, solo de su sitio oficial.">
                     &lt;bancoestado@publimailer.cl&gt;
@@ -51,7 +53,9 @@
 
             <div class="correo-soporte">
                 <span>Ayuda Soporte </span>
-                <span class="correo-soporte-num sospechoso" data-pos="left"
+                <span class="correo-soporte-num sospechoso" 
+                    data-pos="left"
+                    data-id="soporte"
                     data-feedback-si="¡Correcto! Los números de soporte que no coinciden con los oficiales del banco son sospechosos."
                     data-feedback-no="Este número es sospechoso. Los bancos no usan números como este para soporte.">
                     +569 5134590
@@ -63,6 +67,7 @@
         <!-- ===== SALUDO GENÉRICO ===== -->
         <p>
             <span class="sospechoso"
+                data-id="saludo"
                 data-feedback-si="¡Correcto! Los bancos oficiales suelen dirigirse por tu nombre y no con saludos genéricos como 'Estimado cliente'."
                 data-feedback-no="En realidad, los bancos oficiales suelen dirigirse por tu nombre y no con saludos genéricos como 'Estimado cliente'.">
                 Estimado cliente,
@@ -83,6 +88,7 @@
         <p>
             Para evitar la <strong>
                 <span class="sospechoso"
+                    data-id="ortografia"
                     data-feedback-si="¡Correcto! Las faltas de ortografía suelen ser indicativos de fraudes."
                     data-feedback-no="Los correos oficiales están correctamente escritos, no tienen faltas de ortografía.">
                     suspención
@@ -90,6 +96,7 @@
             </strong>
             de sus servicios,
             <span class="sospechoso"
+                data-id="urgencia"
                 data-feedback-si="¡Correcto! Los correos que solicitan acciones urgentes suelen ser fraudulentos."
                 data-feedback-no="Este mensaje es sospechoso. Los correos oficiales no suelen pedir acciones urgentes.">
                 verifique su identidad dentro de las próximas <strong>24 horas</strong>.
@@ -103,6 +110,7 @@
 
         <div class="correo-boton">
             <a class="btn-alerta sospechoso"
+                data-id="boton"
                 data-feedback-si="¡Correcto! Los bancos nunca piden verificar la cuenta desde un botón en un correo. La única forma segura es ingresar manualmente al sitio oficial."
                 data-feedback-no="Este botón es sospechoso. Los bancos no utilizan enlaces en correos para pedir verificaciones; debes ingresar por tu navegador al sitio oficial.">
                 Verificar mi cuenta
@@ -120,7 +128,9 @@
         </div>
 
         <p class="footer-legal">
-            <span class="sospechoso" data-pos="footer"
+            <span class="sospechoso" 
+                data-pos="footer"
+                data-id="footer"
                 data-feedback-si="¡Bien visto! Los estafadores a veces copian textos legales en inglés para que parezca un mensaje serio. También verifica el año incorrecto."
                 data-feedback-no="Este aviso no es oficial. Un banco real no mezcla idiomas ni usa textos legales genéricos sacados de Internet.">
                 Copyright © 2019 BancoState.
@@ -137,3 +147,11 @@
 
 <!-- CURSOR MANO (solo fuera del correo) -->
 <img src="/images/mano.png" id="mano-img">
+
+<div class="contenedor-finalizar">
+    <form id = "form-simulacion" action="/guardar-simulacion" method="POST">
+        <input type="hidden" name="userId" value="<%= userId %>">
+        <input type="hidden" name="datosSimulacion" id="input-datos-simulacion">
+        <button type="button" onclick="finalizarSimulacion()" class="btn-finalizar">Finalizar Simulación</button>
+    </form>
+</div>

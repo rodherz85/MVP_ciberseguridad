@@ -19,6 +19,17 @@ let ultimoSospechoso = null;
 let timerDelay = null;
 let freeze = false;
 
+let resultadosPistas = {
+    asunto: "no_visto",
+    remitente: "no_visto",
+    soporte: "no_visto",
+    saludo: "no_visto",
+    ortografia: "no_visto",
+    urgencia: "no_visto",
+    boton: "no_visto",
+    footer: "no_visto"
+};
+
 /* =============================================================
    MOSTRAR TOOLTIP (NUEVA LÓGICA)
 ============================================================= */
@@ -70,14 +81,40 @@ function cerrarTooltip() {
     freeze = false;
 }
 
+function registrarRespuesta(pistaId, esAcierto) {
+    if(!pistaId) return;
+    if (esAcierto) {
+        resultadosPistas[pistaId] = "acierto";
+        console.log(`Acierto en: ${pistaId}`);
+        } else {
+            resultadosPistas[pistaId] = "fallo";
+            console.log(`Fallo en: ${pistaId}`);
+        }
+}
+
+window.finalizarSimulacion = function() {
+    console.log("Enviando resultados...", resultadosPistas);
+    const inputDatos = document.getElementById("input-datos-simulacion");
+    const formulario = document.getElementById("form-simulacion");
+
+    if(inputDatos && formulario) {
+        inputDatos.value = JSON.stringify(resultadosPistas);
+        formulario.submit();
+    } else {
+        console.error("Error: No se encontró el formulario.");
+    }
+};
+
 btnSi.onclick = () => {
     tooltipFeedback.textContent = window.pistaActual.si;
     tooltipFeedback.classList.remove("oculto");
+    registrarRespuesta(window.pistaActual.id, true);
 };
 
 btnNo.onclick = () => {
     tooltipFeedback.textContent = window.pistaActual.no;
     tooltipFeedback.classList.remove("oculto");
+    registrarRespuesta(window.pistaActual.id, false);       
 };
 
 btnCerrar.onclick = cerrarTooltip;
@@ -90,6 +127,7 @@ function mostrarPregunta(elemento) {
 
     window.pistaActual = {
         elemento: elemento,
+        id: elemento.dataset.id,
         si: elemento.dataset.feedbackSi,
         no: elemento.dataset.feedbackNo
     };

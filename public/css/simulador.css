@@ -236,6 +236,34 @@ body::before {
 }
 
 /* ==================================================
+   BOTÓN FINALIZAR SIMULACIÓN
+   ================================================== */
+
+   .contenedor-finalizar {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;  
+    z-index: 9999;
+   }
+
+   .btn-finalizar{
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+    transition: transform 0.2s, background-color 0.2s;
+  }
+
+  .btn-finalizar:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+  }
+
+/* ==================================================
    EFECTO DETECTIVE (HOVER SOSPECHOSO)
    ================================================== */
 .sospechoso {
