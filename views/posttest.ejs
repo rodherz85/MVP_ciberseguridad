@@ -3,10 +3,11 @@
 <div class = "test-contenedor">
     <h2 class="test-titulo">Test Final y Encuesta</h2>
     <form action="/posttest" method="POST" class="test-formulario">
+        <input type="hidden" name="userId" value="<%= userId %>">
         <!-- Pregunta 1-->
          <div class = "pregunta">
             <p>1. Llega un correo de tu banco indicando que debes cambiar tu contraseña URGENTE. ¿Qué harías?</p>
-            <label class="opcion"><input type= "radio" name="p1" value="A"> a. Ignoro el correo y nunca ingreso mi clave por ese medio.</label>
+            <label class="opcion"><input type= "radio" name="p1" value="A" required> a. Ignoro el correo y nunca ingreso mi clave por ese medio.</label>
             <label class="opcion"><input type= "radio" name="p1" value="B"> b. Uso el botón que aparece en el correo para cambiar mi contraseña.</label>
             <label class="opcion"><input type= "radio" name="p1" value="C"> c. Solo doy mi usuario pero no la contraseña</label>
          </div>
@@ -23,7 +24,7 @@
         <!-- Pregunta 3 verdadero/Falso-->
             <div class = "pregunta">
                 <p>3. Si tu computador tiene el mejor antivirus del mercado, ¿Puedes hacer clic en cualquier enlace sin preocuparte?</p>
-                <label class="opcion"><input type="radio" name="p3" value="V"> Verdadero</label>
+                <label class="opcion"><input type="radio" name="p3" value="V" required> Verdadero</label>
                 <label class="opcion"><input type="radio" name="p3" value="F"> Falso</label>
             </div>
 
@@ -33,7 +34,7 @@
 
     <div class="likert-grid">
         <label class="likert-opcion">
-            <input type="radio" name="p4" value="1">
+            <input type="radio" name="p4" value="1" required>
             <span class="emoji">😎</span>
             <span class="texto">Muy tranquilo(a)</span>
         </label>
@@ -68,7 +69,7 @@
                 <p>5. ¿Qué tan preparado(a) se siente para identificar fraudes por internet?</p>
                 <div class="likert-grid">
                     <label class="likert-opcion">
-                        <input type="radio" name="p5" value="1">
+                        <input type="radio" name="p5" value="1" required>
                         <span class="emoji">😎</span>
                         <span class="texto">Muy Preparado(a)</span>
                     </label>
@@ -103,7 +104,7 @@
         <!-- Pregunta S1 (sí/no que pediste) -->
         <div class="pregunta">
             <p>1. ¿Te gustaría una versión que te prepare para estafas en SMS o redes sociales?</p>
-            <label class="opcion"><input type="radio" name="s1" value="SI"> Sí</label>
+            <label class="opcion"><input type="radio" name="s1" value="SI" required> Sí</label>
             <label class="opcion"><input type="radio" name="s1" value="NO"> No</label>
         </div>
 
@@ -112,7 +113,7 @@
     <p>2. ¿Qué tan útil te pareció el simulador?</p>
 
     <div class="likert-grid">
-        <label class="likert-opcion"><input type="radio" name="s2" value="1"><span class="texto">1</span></label>
+        <label class="likert-opcion"><input type="radio" name="s2" value="1" required><span class="texto">1</span></label>
         <label class="likert-opcion"><input type="radio" name="s2" value="2"><span class="texto">2</span></label>
         <label class="likert-opcion"><input type="radio" name="s2" value="3"><span class="texto">3</span></label>
         <label class="likert-opcion"><input type="radio" name="s2" value="4"><span class="texto">4</span></label>
@@ -125,7 +126,7 @@
     <p>3. ¿Qué tan clara fue la retroalimentación entregada en el simulador?</p>
 
     <div class="likert-grid">
-        <label class="likert-opcion"><input type="radio" name="s3" value="1"><span class="texto">1</span></label>
+        <label class="likert-opcion"><input type="radio" name="s3" value="1" required><span class="texto">1</span></label>
         <label class="likert-opcion"><input type="radio" name="s3" value="2"><span class="texto">2</span></label>
         <label class="likert-opcion"><input type="radio" name="s3" value="3"><span class="texto">3</span></label>
         <label class="likert-opcion"><input type="radio" name="s3" value="4"><span class="texto">4</span></label>
@@ -138,7 +139,7 @@
     <p>4. ¿Qué tan satisfecho(a) estás con la experiencia general?</p>
 
     <div class="likert-grid">
-        <label class="likert-opcion"><input type="radio" name="s4" value="1"><span class="texto">1</span></label>
+        <label class="likert-opcion"><input type="radio" name="s4" value="1" required><span class="texto">1</span></label>
         <label class="likert-opcion"><input type="radio" name="s4" value="2"><span class="texto">2</span></label>
         <label class="likert-opcion"><input type="radio" name="s4" value="3"><span class="texto">3</span></label>
         <label class="likert-opcion"><input type="radio" name="s4" value="4"><span class="texto">4</span></label>

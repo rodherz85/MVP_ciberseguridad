@@ -1,0 +1,32 @@
+<% layout('simulador_layout') %>
+
+<div class="bienvenida-card">
+
+    <h1 class="bienvenida-titulo">Simulador de Ciberseguridad</h1>
+    <p class="bienvenida-texto">
+        Bienvenido/a. Este es un simulador para evaluar tu capacidad de detectar fraudes digitales.
+        <br>
+        La experiencia toma aproximadamente <strong>5 a 7 minutos</strong>.
+    </p>
+
+    <form action="/comenzar" method="POST" style="text-align: left;">
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">Tu edad:</label>
+            <input type="number" name="edad" required min="10" max="99" placeholder="Ej: 25" class="form-input">
+        </div>
+
+        <div class="form-checkbox-container">
+            <label style="display: flex; gap: 12px; align-items: flex-start; cursor: pointer;">
+                <input type="checkbox" name="consentimiento" required style="margin-top: 4px; transform: scale(1.2);">
+                <span style="font-size: 14px; color: #555; line-height: 1.4;">
+                    He leído y acepto participar voluntariamente. Entiendo que mis datos serán tratados de forma anónima solo con fines académicos.
+                </span>
+            </label>
+        </div>
+
+        <button type="submit" class="btn-comenzar">
+            Comenzar 
+        </button>
+    </form>
+</div>

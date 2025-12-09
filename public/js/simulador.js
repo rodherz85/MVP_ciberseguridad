@@ -9,11 +9,11 @@ const manoImg = document.getElementById("mano-img");
    ELEMENTOS DEL TOOLTIP
 ============================================================= */
 const tooltip = document.getElementById("tooltip-pista");
-const tooltipPregunta = tooltip.querySelector(".tooltip-pregunta");
-const tooltipFeedback = tooltip.querySelector(".tooltip-feedback");
-const btnSi = tooltip.querySelector(".btn-si");
-const btnNo = tooltip.querySelector(".btn-no");
-const btnCerrar = tooltip.querySelector(".tooltip-cerrar");
+const tooltipPregunta = tooltip ? tooltip.querySelector(".tooltip-pregunta") : null;
+const tooltipFeedback = tooltip ? tooltip.querySelector(".tooltip-feedback") : null;
+const btnSi = tooltip ? tooltip.querySelector(".btn-si") : null;
+const btnNo = tooltip ? tooltip.querySelector(".btn-no") : null;
+const btnCerrar = tooltip ? tooltip.querySelector(".tooltip-cerrar") : null;
 
 let ultimoSospechoso = null;
 let timerDelay = null;
@@ -34,12 +34,13 @@ let resultadosPistas = {
    MOSTRAR TOOLTIP (NUEVA LÓGICA)
 ============================================================= */
 function mostrarTooltip(elemento, pregunta) {
-    freeze = true;
+    if (!tooltip || !tooltipPregunta || !tooltipFeedback) return;
 
+    freeze = true;
     tooltipPregunta.textContent = pregunta;
 
     // REINICIAR feedback CADA VEZ
-    tooltipFeedback.textContent = "";  
+    tooltipFeedback.textContent = "";
     tooltipFeedback.classList.add("oculto");
 
     const rect = elemento.getBoundingClientRect();
@@ -70,6 +71,8 @@ function mostrarTooltip(elemento, pregunta) {
    OCULTAR TOOLTIP
 ============================================================= */
 function cerrarTooltip() {
+    if (!tooltip || !tooltipFeedback) return;
+
     tooltip.classList.add("oculto");
     tooltipFeedback.classList.add("oculto");
 
@@ -82,14 +85,14 @@ function cerrarTooltip() {
 }
 
 function registrarRespuesta(pistaId, esAcierto) {
-    if(!pistaId) return;
+    if (!pistaId) return;
     if (esAcierto) {
         resultadosPistas[pistaId] = "acierto";
         console.log(`Acierto en: ${pistaId}`);
-        } else {
-            resultadosPistas[pistaId] = "fallo";
-            console.log(`Fallo en: ${pistaId}`);
-        }
+    } else {
+        resultadosPistas[pistaId] = "fallo";
+        console.log(`Fallo en: ${pistaId}`);
+    }
 }
 
 window.finalizarSimulacion = function() {
@@ -97,7 +100,7 @@ window.finalizarSimulacion = function() {
     const inputDatos = document.getElementById("input-datos-simulacion");
     const formulario = document.getElementById("form-simulacion");
 
-    if(inputDatos && formulario) {
+    if (inputDatos && formulario) {
         inputDatos.value = JSON.stringify(resultadosPistas);
         formulario.submit();
     } else {
@@ -105,19 +108,25 @@ window.finalizarSimulacion = function() {
     }
 };
 
-btnSi.onclick = () => {
-    tooltipFeedback.textContent = window.pistaActual.si;
-    tooltipFeedback.classList.remove("oculto");
-    registrarRespuesta(window.pistaActual.id, true);
-};
+if (btnSi) {
+    btnSi.onclick = () => {
+        tooltipFeedback.textContent = window.pistaActual.si;
+        tooltipFeedback.classList.remove("oculto");
+        registrarRespuesta(window.pistaActual.id, true);
+    };
+}
 
-btnNo.onclick = () => {
-    tooltipFeedback.textContent = window.pistaActual.no;
-    tooltipFeedback.classList.remove("oculto");
-    registrarRespuesta(window.pistaActual.id, false);       
-};
+if (btnNo) {
+    btnNo.onclick = () => {
+        tooltipFeedback.textContent = window.pistaActual.no;
+        tooltipFeedback.classList.remove("oculto");
+        registrarRespuesta(window.pistaActual.id, false);
+    };
+}
 
-btnCerrar.onclick = cerrarTooltip;
+if (btnCerrar) {
+    btnCerrar.onclick = cerrarTooltip;
+}
 
 /* =============================================================
    FUNCIÓN: MOSTRAR PREGUNTA
@@ -137,74 +146,118 @@ function mostrarPregunta(elemento) {
 
 /* =============================================================
    DETECCIÓN LUPA
+   Solo se activa si estamos en el simulador (contenido + lupa + mano)
 ============================================================= */
-document.addEventListener("mousemove", (e) => {
+if (contenido && lupaImg && manoImg) {
+    document.addEventListener("mousemove", (e) => {
 
-    if (freeze) {
-        lupaImg.style.left = e.clientX + "px";
-        lupaImg.style.top = e.clientY + "px";
-        return;
-    }
-
-    const rect = lupaImg.getBoundingClientRect();
-    const centroX = e.clientX;
-    const centroY = e.clientY - rect.height * 0.25;
-
-    lupaImg.style.display = "none";
-    const elementoBajoLupa = document.elementFromPoint(centroX, centroY);
-    const dentro = contenido.contains(elementoBajoLupa);
-
-    if (dentro) {
-        lupaImg.style.display = "block";
-        lupaImg.style.left = e.clientX + "px";
-        lupaImg.style.top = e.clientY + "px";
-
-        manoImg.style.display = "none";
-
-        const radio = 40;
-        let detectado = null;
-
-        for (let ang = 0; ang < Math.PI * 2; ang += Math.PI / 6) {
-            const px = centroX + Math.cos(ang) * radio;
-            const py = centroY + Math.sin(ang) * radio;
-            const elem = document.elementFromPoint(px, py);
-
-            if (elem && elem.closest(".sospechoso")) {
-                detectado = elem.closest(".sospechoso");
-                break;
-            }
+        if (freeze) {
+            lupaImg.style.left = e.clientX + "px";
+            lupaImg.style.top = e.clientY + "px";
+            return;
         }
 
-        if (detectado !== ultimoSospechoso) {
+        const rect = lupaImg.getBoundingClientRect();
+        const centroX = e.clientX;
+        const centroY = e.clientY - rect.height * 0.25;
+
+        lupaImg.style.display = "none";
+        const elementoBajoLupa = document.elementFromPoint(centroX, centroY);
+        const dentro = contenido.contains(elementoBajoLupa);
+
+        if (dentro) {
+            lupaImg.style.display = "block";
+            lupaImg.style.left = e.clientX + "px";
+            lupaImg.style.top = e.clientY + "px";
+
+            manoImg.style.display = "none";
+
+            const radio = 40;
+            let detectado = null;
+
+            for (let ang = 0; ang < Math.PI * 2; ang += Math.PI / 6) {
+                const px = centroX + Math.cos(ang) * radio;
+                const py = centroY + Math.sin(ang) * radio;
+                const elem = document.elementFromPoint(px, py);
+
+                if (elem && elem.closest(".sospechoso")) {
+                    detectado = elem.closest(".sospechoso");
+                    break;
+                }
+            }
+
+            if (detectado !== ultimoSospechoso) {
+                clearTimeout(timerDelay);
+
+                if (ultimoSospechoso)
+                    ultimoSospechoso.classList.remove("hover-detectado");
+
+                ultimoSospechoso = detectado;
+
+                if (detectado) {
+                    timerDelay = setTimeout(() => {
+                        if (ultimoSospechoso === detectado) {
+                            mostrarPregunta(detectado);
+                        }
+                    }, 850);
+                }
+            }
+
+        } else {
+            lupaImg.style.display = "none";
             clearTimeout(timerDelay);
 
-            if (ultimoSospechoso)
+            if (ultimoSospechoso) {
                 ultimoSospechoso.classList.remove("hover-detectado");
-
-            ultimoSospechoso = detectado;
-
-            if (detectado) {
-                timerDelay = setTimeout(() => {
-                    if (ultimoSospechoso === detectado) {
-                        mostrarPregunta(detectado);
-                    }
-                }, 850);
+                ultimoSospechoso = null;
             }
+
+            manoImg.style.display = "block";
+            manoImg.style.left = e.clientX + "px";
+            manoImg.style.top = e.clientY + "px";
         }
+    });
+}
 
-    } else {
-        lupaImg.style.display = "none";
-        clearTimeout(timerDelay);
+/* =============================================================
+   VALIDACIÓN DE CHECKBOXES (PRE-TEST Y POST-TEST)
+   Funciona para cualquier vista que tenga checkboxes con name="p2"
+============================================================= */
+document.addEventListener("DOMContentLoaded", () => {
 
-        if (ultimoSospechoso) {
-            ultimoSospechoso.classList.remove("hover-detectado");
-            ultimoSospechoso = null;
+    // 1. Buscamos si existen checkboxes 'p2' en esta página
+    const checkboxesP2 = document.querySelectorAll('input[name="p2"]');
+
+    // Si existen (es decir, estamos en Pretest o Posttest), activamos la lógica
+    if (checkboxesP2.length > 0) {
+
+        const formulario = checkboxesP2[0].closest('form'); // Detectamos el formulario automáticamente
+
+        // Función de validación
+        const validarP2 = () => {
+            const algunoMarcado = Array.from(checkboxesP2).some(check => check.checked);
+
+            if (!algunoMarcado) {
+                checkboxesP2[0].setCustomValidity("Debes seleccionar al menos una opción en la pregunta 2.");
+            } else {
+                checkboxesP2[0].setCustomValidity("");
+            }
+        };
+
+        // Revisamos cada vez que cambia algo en p2
+        checkboxesP2.forEach(c => {
+            c.addEventListener('change', validarP2);
+        });
+
+        // Y justo antes de enviar
+        if (formulario) {
+            formulario.addEventListener('submit', (e) => {
+                validarP2();
+                if (!formulario.checkValidity()) {
+                    e.preventDefault();
+                    formulario.reportValidity();
+                }
+            });
         }
-
-        manoImg.style.display = "block";
-        manoImg.style.left = e.clientX + "px";
-        manoImg.style.top = e.clientY + "px";
     }
 });
-
-

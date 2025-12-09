@@ -1,0 +1,49 @@
+<% layout('simulador_layout') %>
+
+<h1 class="titulo-externo">INFORME FINAL</h1>
+
+<div class="pizarra-informe">
+    
+    <div class="item-evidencia" style="border-bottom: 2px solid #333; margin-bottom: 10px; padding-bottom: 10px;">
+        <div style="font-weight: bold; color: #333; text-transform: uppercase; font-size: 14px; text-align: center;">PISTA</div>
+        <div style="font-weight: bold; color: #333; text-transform: uppercase; font-size: 14px; text-align: center;">PUNTAJE</div>
+        <div style="font-weight: bold; color: #333; text-transform: uppercase; font-size: 14px; text-align: center;">FEEDBACK</div>
+    </div>
+
+    <ul class="lista-evidencias">
+        <% evidencias.forEach(function(item) { %>
+            <li class="item-evidencia">
+                
+                <div class="info-pista">
+                    <span style="font-size: 1.5em; width: 30px; text-align: center;"><%= item.icono %></span>
+                    <span class="nombre-pista"><%= item.nombre %></span>
+                </div>
+
+                <div class="detalle-puntos <%= item.clase %>" style="text-align: center; width: 100%;">
+                    +<%= item.puntos %>
+                </div>
+
+                <div class="columna-feedback">
+                    <%= item.feedback %>
+                </div>
+
+            </li>
+        <% }); %>
+    </ul>
+
+    <hr style="border: 0; border-top: 2px solid #333; margin-top: auto;">
+
+    <div class="footer-puntaje">
+        <span class="texto-obtuviste">Obtuviste:</span>
+        <div class="sello-puntaje">
+            <%= puntajeObtenido %> / <%= puntajeMax%> PTS
+        </div>
+    </div>
+
+</div>
+
+<div class="contenedor-boton-final">
+    <a href="/" class="btn-cerrar-caso">
+        📁 ARCHIVAR CASO Y SALIR
+    </a>
+</div>

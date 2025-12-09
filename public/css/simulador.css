@@ -539,3 +539,312 @@ position: fixed;
     color: #ffc107; /* Dorado */
     transform: scale(1.1); /* Pequeño efecto pop */
 }
+
+
+/* ==================================================
+   Bienvenida ================================================= */
+
+body.bienvenida {
+    /* --- FONDO --- */
+    background-image: url('/images/bienvenida.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+    /* --- POSICIONAMIENTO --- */
+    display: flex;
+    justify-content: center; /* Le decimos que se centre... */
+    align-items: center;
+    
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    
+    /* --- EL TRUCO VISUAL --- */
+    /* Agregamos mucho relleno a la izquierda. 
+       Esto hace que el "centro" disponible se mueva a la derecha,
+       justo después del pilar. */
+    padding-left: 35%; 
+    padding-right: 5%; /* Un pequeño margen a la derecha para balancear */
+    
+    box-sizing: border-box;
+}
+
+/* RESPONSIVE: En celulares, quitamos ese empuje para que se vea bien */
+@media (max-width: 900px) {
+    body.bienvenida {
+        justify-content: center;
+        padding-left: 20px; /* Reseteamos a normal */
+        padding-right: 20px;
+    }
+}
+
+.bienvenida-card {
+    background: rgba(255, 255, 255, 0.95); /* Blanco con un poquito de transparencia */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3); /* Sombra más pronunciada para resaltar */
+    max-width: 500px;
+    width: 90%; /* Para que se adapte a móviles */
+    text-align: center;
+    backdrop-filter: blur(5px); /* Efecto borroso detrás de la tarjeta (opcional, moderno) */
+}
+
+.bienvenida-titulo {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 2.2em;
+}
+
+.bienvenida-texto {
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Estilos del formulario para que coincidan con la tarjeta */
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box; /* Importante para que el padding no aumente el ancho */
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.form-checkbox-container {
+    margin-bottom: 25px;
+    background: #f0f4f8;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: left;
+    border: 1px solid #dce4ec;
+}
+
+.btn-comenzar {
+    width: 100%;
+    background: #007bff; /* Azul */
+    /* background: #28a745; /* Verde (opcional) */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.btn-comenzar:hover {
+    transform: scale(1.02);
+    background: #0056b3; /* Azul más oscuro al pasar el mouse */
+}
+
+/*=== RESULTADOS  ===*/
+/* =========================================
+   PANTALLA DE RESULTADOS (CORREGIDO)
+========================================= */
+
+/* 1. Fondo Principal */
+body.resultados {
+background-image: url('/images/resultados.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    position: relative;
+    overflow: hidden; 
+}
+
+/* 2. Título Flotante (Fuera del papel) */
+.titulo-externo {
+    position: absolute;
+    top: 3%; 
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    margin: 0;
+    z-index: 10;
+}
+
+/* 3. La "Hoja de Papel" */
+.pizarra-informe {
+    position: absolute;
+    /* Ubicación ajustada para dejar espacio al título */
+    top: 15%; 
+    left: 22%;
+    width: 50%;
+    height: 60%;
+    
+    background-color: rgba(255, 255, 245, 0.95);
+    padding: 20px 30px;
+    box-shadow: 3px 3px 15px rgba(0,0,0,0.4);
+    border-radius: 2px;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+/* 4. Lista de Evidencias (Scrollable) */
+.lista-evidencias {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    font-size: 16px;
+    
+    flex-grow: 1; /* Ocupa el espacio disponible */
+    overflow-y: auto; 
+    padding-right: 5px; 
+}
+
+/* Scrollbar personalizado */
+.lista-evidencias::-webkit-scrollbar { width: 6px; }
+.lista-evidencias::-webkit-scrollbar-track { background: #f1f1f1; }
+.lista-evidencias::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+.lista-evidencias::-webkit-scrollbar-thumb:hover { background: #888; }
+
+/* 5. Items (GRID 3 COLUMNAS) */
+.item-evidencia {
+    display: grid;
+    /* Ajuste de columnas: Nombre | Puntos | Feedback */
+    grid-template-columns: 1.2fr 0.5fr 1.5fr; 
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #ccc;
+}
+
+.item-evidencia:last-child { border-bottom: none; }
+
+/* Columna 1: Info */
+.info-pista {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.nombre-pista {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1em;
+}
+
+/* Columna 2: Puntos */
+.detalle-puntos {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    min-width: 60px;
+}
+
+/* Columna 3: Feedback */
+.columna-feedback {
+    font-size: 14px;
+    color: #444;
+    font-style: italic;
+    line-height: 1.3;
+}
+
+/* Colores */
+.texto-verde { color: #28a745; }
+.texto-amarillo { color: #d39e00; }
+.texto-rojo { color: #dc3545; }
+
+/* 6. Footer del Puntaje (NUEVO: Recto y al final) */
+.footer-puntaje {
+    display: flex;
+    justify-content: flex-end; /* Alineado a la derecha */
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 5px;
+}
+
+.texto-obtuviste {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.sello-puntaje {
+    font-size: 28px;
+    font-weight: bold;
+    color: #d9534f;
+    border: 3px solid #d9534f;
+    padding: 5px 20px;
+    border-radius: 8px;
+    
+    /* CORRECCIÓN: Quitamos la rotación (-5deg) para que esté recto */
+    transform: none; 
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* 7. Botón Flotante (Fuera del papel) */
+.contenedor-boton-final {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 100;
+}
+
+.btn-cerrar-caso {
+    display: inline-block;
+    background: #007bff; 
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    border: 2px solid rgba(255,255,255,0.2);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.btn-cerrar-caso:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Responsive para celulares */
+@media (max-width: 768px) {
+    body.resultados {
+        overflow: auto; /* Permitir scroll en celular */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .pizarra-informe {
+        position: relative;
+        top: auto; left: auto;
+        width: 90%; height: auto;
+        margin: 20px 0 80px 0; /* Margen abajo para el botón flotante */
+        transform: none;
+    }
+    .item-evidencia {
+        /* En celular, pasamos a 1 sola columna vertical */
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 5px;
+    }
+    .info-pista { justify-content: center; }
+    .detalle-puntos { text-align: center; }
+}
