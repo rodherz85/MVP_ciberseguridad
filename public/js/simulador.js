@@ -30,6 +30,10 @@ let resultadosPistas = {
     footer: "no_visto"
 };
 
+//Contador de pistas encontradas
+
+let pistasEncontradas = 0;
+
 /* =============================================================
    MOSTRAR TOOLTIP (NUEVA LÓGICA)
 ============================================================= */
@@ -93,6 +97,29 @@ function registrarRespuesta(pistaId, esAcierto) {
         resultadosPistas[pistaId] = "fallo";
         console.log(`Fallo en: ${pistaId}`);
     }
+
+    pistasEncontradas ++;
+
+    const contadorSpan = document.getElementById("contador-texto");
+    if (contadorSpan) {
+        contadorSpan.textContent = pistasEncontradas;
+        if(pistasEncontradas === 8){
+            const contadorDiv = document.querySelector(".contador-pistas");
+            if (contadorDiv) {
+                contadorDiv.style.borderColor = "#28a745";
+                contadorDiv.style.backgroundColor = "rgba(40, 167, 69, 0.9)";
+            }
+        }
+    }
+
+    const elementoPista = document.querySelector(`[data-id="${pistaId}"]`);
+    if (elementoPista) {
+        elementoPista.classList.add("pista-encontrada");
+        elementoPista.classList.remove("sospechoso");
+    }
+
+    cerrarTooltip();
+
 }
 
 window.finalizarSimulacion = function() {

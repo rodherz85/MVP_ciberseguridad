@@ -1,5 +1,9 @@
 <% layout('simulador_layout') %>
 
+<div class="contador-pistas">
+    Pistas:<span id="contador-texto">0</span>/ 8
+</div>
+
 <!-- TOOLTIP INTERACTIVO GLOBAL -->
 <div id="tooltip-pista" class="tooltip-ventana oculto">
     <div class="tooltip-pregunta"></div>
@@ -79,10 +83,6 @@
             Hemos detectado un intento de inicio de sesión inusual en su banca en línea desde un dispositivo no reconocido.
         </p>
 
-        <p>
-            Por su seguridad, hemos aplicado un <strong>bloqueo preventivo</strong> a su cuenta terminada en
-            <strong>–4821</strong>.
-        </p>
 
         <!-- ===== ORTOGRAFÍA + URGENCIA ===== -->
         <p>
@@ -118,9 +118,9 @@
         </div>
 
         <!-- ===== RESTO DEL CONTENIDO ===== -->
-        <p>Si ya realizó esta verificación, puede ignorar este mensaje.</p>
+        <p>Si ya realizó esta verificación, puede ignorar este mensaje.<br>
 
-        <p>Atentamente,<br>Equipo de Seguridad BancoEstado</p>
+        Atentamente,<br>Equipo de Seguridad BancoEstado</p>
 
         <!-- ===== FOOTER ===== -->
         <div class="correo-footer">

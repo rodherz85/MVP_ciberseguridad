@@ -15,9 +15,12 @@ body.simulador {
   overflow: hidden;
   cursor: none;
 
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* === FONDO ESPECIAL PARA PRETEST (o cualquier test) === */
@@ -52,17 +55,17 @@ body::before {
    ================================================== */
 #contenido-mvp {
   position: relative;
-  width: 90vw;
-  max-width: 1300px;
-  height: 75vh;
-  max-height: 750px;
+  width: 85vw;
+  max-width: 1000px;
+  height: auto;
+  max-height: 85vh;
 
   background: white;
   border-radius: 12px;
-  padding: 20px;
+  padding: 18px;
   overflow-y: auto;
 
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(0, 0, 0, 0.3);
   box-shadow:
     0 0 0 10px rgba(0,0,0,0.3),
     0 0 20px rgba(0,0,0,0.35),
@@ -73,7 +76,6 @@ body::before {
 
   font-size: 20px;
   color: #333;
-  margin-top: -80px;
 
   cursor: none !important; /* oculta el mouse dentro */
 }
@@ -116,18 +118,19 @@ body::before {
   width: 90%;
   margin: 0 auto;
   background: #fff;
-  padding: 20px;
+  padding: 10px;
 }
 
 .correo p {
-  margin: 10px 0;
-  line-height: 1.8;
+  margin: 5px 0;
+  line-height: 1.5;
 }
 
 .btn-alerta {
   display: inline-block;
   background-color: #ff6a00;
   color: white;
+  font-weight: bold;
   text-decoration: none;
   padding: 10px 18px;
   border-radius: 6px;
@@ -150,18 +153,18 @@ body::before {
 /* METADATOS DEL CORREO */
 .correo-meta {
   margin-bottom: 4px;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
 .correo-asunto {
   font-weight: bold;
   color: #000;
-  font-size: 20px;
-  margin-bottom: 6px;
+  font-size: 22px;
+  margin-bottom: 10px;
 }
 
 .correo-remitente {
-  font-size: 14px;
+  font-size: 18px;
   color: black;
   font-weight: bold;
 }
@@ -176,7 +179,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 14px 0 18px;
+  margin: 4px 0 6px;
 }
 
 .correo-logo {
@@ -229,8 +232,8 @@ body::before {
 
 
 .correo-footer-logo {
-  width: 70%;
-  max-width: 350px;
+  height: 100px;
+  width: auto;
   display: block;
   margin: 10px auto;
 }
@@ -847,4 +850,42 @@ background-image: url('/images/resultados.png');
     }
     .info-pista { justify-content: center; }
     .detalle-puntos { text-align: center; }
+}
+
+/* =========================================
+   MEJORAS VISUALES (Contador y Marcado)
+========================================= */
+
+/* 1. Contador Flotante (Tipo Videojuego) */
+.contador-pistas {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: 2px solid #ffd700; /* Borde dorado */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+} 
+
+/* 2. Efecto "DETECTADO" (Círculo rojo alrededor de la pista) */
+.pista-encontrada {
+    border: 3px solid #dc3545; /* Borde rojo intenso */
+    border-radius: 5px;
+    background-color: rgba(220, 53, 69, 0.1); /* Fondo rojo muy suave */
+    box-shadow: 0 0 10px rgba(220, 53, 69, 0.5); /* Resplandor */
+    transition: all 0.3s ease;
+    cursor: default; /* El cursor ya no cambia */
+}
+
+/* Deshabilitar interacción una vez encontrada para que no abra el tooltip de nuevo */
+.pista-encontrada {
+    pointer-events: none; 
 }
