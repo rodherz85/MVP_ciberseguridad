@@ -1,32 +1,90 @@
 <% layout('simulador_layout') %>
 
-<div class="bienvenida-card">
-
-    <h1 class="bienvenida-titulo">Simulador de Ciberseguridad</h1>
-    <p class="bienvenida-texto">
-        Bienvenido/a. Este es un simulador para evaluar tu capacidad de detectar fraudes digitales.
-        <br>
-        La experiencia toma aproximadamente <strong>5 a 7 minutos</strong>.
-    </p>
-
-    <form action="/comenzar" method="POST" style="text-align: left;">
+<div class="perfil-container">
+    
+    <div class="perfil-layout">
         
-        <div style="margin-bottom: 20px;">
-            <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">Tu edad:</label>
-            <input type="number" name="edad" required min="10" max="99" placeholder="Ej: 25" class="form-input">
+        <div class="columna-narrativa">
+            <div class="agencia-header">
+                <i class="fas fa-user-secret icono-agencia" style="color: var(--ui-primary);"></i>
+                <span class="icono-agencia"></span>
+                <h1>AGENCIA DE CIBERSEGURIDAD</h1>
+                <div class="badge-status">ESTADO: RECLUTAMIENTO</div>
+            </div>
+
+            <div class="intro-texto">
+                
+                <p><strong>¡Atención!</strong> Buscamos personas observadoras para unirse a nuestra unidad de <strong>Detectives de Fraudes Digitales</strong>.</p>
+                <p>Tu misión consta de dos etapas:</p>
+                <ul style="text-align: left; margin-bottom: 20px; color: #555;">
+                    <li><strong>1. Prueba de conocimientos básicos.</strong></li>
+                    <li><strong>2. Análisis de un caso de estafa real.</strong></li>
+                </ul>
+                <div class="nota-final">
+                    Completa tu ficha a la derecha para recibir tu placa y comenzar el entrenamiento. 👉
+                </div>
+            </div>
         </div>
 
-        <div class="form-checkbox-container">
-            <label style="display: flex; gap: 12px; align-items: flex-start; cursor: pointer;">
-                <input type="checkbox" name="consentimiento" required style="margin-top: 4px; transform: scale(1.2);">
-                <span style="font-size: 14px; color: #555; line-height: 1.4;">
-                    He leído y acepto participar voluntariamente. Entiendo que mis datos serán tratados de forma anónima solo con fines académicos.
-                </span>
-            </label>
-        </div>
+        <div class="columna-formulario">
+            <form action="/comenzar" method="POST" id="form-perfil">
+                <h3 class="titulo-placa"><i class="fas fa-id-card-clip"></i> DATOS DE LA PLACA</h3>
+                
+                <div class="form-group">
+                    <label for="edad">1. Edad:</label>
+                    <input type="number" id="edad" name="edad" placeholder="Ej: 65" min="18" max="99" required class="input-grande">
+                </div>
 
-        <button type="submit" class="btn-comenzar">
-            Comenzar 
-        </button>
-    </form>
+                <div class="form-group">
+                    <label>2. Género:</label>
+                    <div class="opciones-grid">
+                        <label class="opcion-card">
+                            <input type="radio" name="genero" value="mujer" required>
+                            <span class="card-content">
+                                <i class="fas fa-female fa-2x"></i><br>Mujer</span>
+                        </label>
+                        <label class="opcion-card">
+                            <input type="radio" name="genero" value="hombre">
+                            <span class="card-content">
+                                <i class="fas fa-male fa-2x"></i><br>Hombre</span>
+                        </label>
+                        <label class="opcion-card">
+                            <input type="radio" name="genero" value="otro">
+                            <span class="card-content">
+                                <i class="fas fa-genderless fa-2x"></i><br>Otro</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>3. ¿Qué tan experto te sientes con la tecnología?</label>
+                    <div class="opciones-lista">
+                        <label class="opcion-row">
+                            <input type="radio" name="experiencia" value="alto" required>
+                            <span class="row-content">Me manejo solo(a)</span>
+                        </label>
+                        <label class="opcion-row">
+                            <input type="radio" name="experiencia" value="medio">
+                            <span class="row-content">A veces pido ayuda</span>
+                        </label>
+                        <label class="opcion-row">
+                            <input type="radio" name="experiencia" value="bajo">
+                            <span class="row-content">Estoy aprendiendo</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-checkbox-container">
+                    <label>
+                        <input type="checkbox" name="consentimiento" required>
+                        <span>Acepto participar en este estudio académico anónimo.</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-comenzar">
+                    GENERAR PLACA Y COMENZAR
+                </button>
+            </form>
+        </div>
+    </div>
 </div>

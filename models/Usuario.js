@@ -3,9 +3,23 @@ const mongoose = require("mongoose");
 const usuarioSchema = new mongoose.Schema({
     edad: {
         type: Number,
-        required: true},
-        consentimiento: {type: Boolean, default: false},
-        fechaInicio: {type: Date, default: Date.now},
+        required: true,
+        min: 18,
+        max: 99
+    },
+    genero: {
+        type: String,
+        enum: ["mujer", "hombre", "otro"],
+        required: true
+    },
+    experiencia: {  
+        type: String,
+        enum: ["alto", "medio", "bajo"],
+        required: true
+    },
+        
+    consentimiento: {type: Boolean, default: false},
+    fechaInicio: {type: Date, default: Date.now},
         fechaFin: Date,
 
         pretest: {

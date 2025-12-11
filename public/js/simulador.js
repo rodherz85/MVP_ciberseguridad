@@ -102,12 +102,12 @@ function registrarRespuesta(pistaId, esAcierto) {
 
     const contadorSpan = document.getElementById("contador-texto");
     if (contadorSpan) {
-        contadorSpan.textContent = pistasEncontradas;
+        contadorSpan.textContent = `${pistasEncontradas}/8`;
         if(pistasEncontradas === 8){
             const contadorDiv = document.querySelector(".contador-pistas");
             if (contadorDiv) {
-                contadorDiv.style.borderColor = "#28a745";
-                contadorDiv.style.backgroundColor = "rgba(40, 167, 69, 0.9)";
+                contadorDiv.style.borderColor = "#007bff";
+                contadorDiv.style.backgroundColor = "rgba(0, 123, 255, 0.9)";
             }
         }
     }

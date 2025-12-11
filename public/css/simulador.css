@@ -40,16 +40,6 @@ body.pretest, body.posttest {
   overflow: auto;
 }
 
-/* Oscurecimiento + blur opcional 
-body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(2px);
-  z-index: -1;
-}*/
-
 /* ==================================================
    ÁREA INTERACTIVA (correo)
    ================================================== */
@@ -859,21 +849,45 @@ background-image: url('/images/resultados.png');
 /* 1. Contador Flotante (Tipo Videojuego) */
 .contador-pistas {
     position: fixed;
-    top: 20px;
+    bottom: 90px;
     right: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 10px 25px;
-    border-radius: 30px;
-    font-size: 18px;
-    font-weight: bold;
     z-index: 9999;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    border: 2px solid #ffd700; /* Borde dorado */
+
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 12px;
+    box-shadow:
+     0 0 8px rgba(0,123,255,0.8),
+     0 0 16px rgba(0,123,255,0.6);
+     
+    border: 2px solid var(--ui-primary); /* mantiene el dorado detectivesco */
+
     display: flex;
-    align-items: center;
-    gap: 6px;
-} 
+    flex-direction: column;
+    align-items: center;   
+    gap: 4px;
+}
+
+.contador-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.9;
+}
+
+.contador-valor {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.contenedor-finalizar {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
 
 /* 2. Efecto "DETECTADO" (Círculo rojo alrededor de la pista) */
 .pista-encontrada {
@@ -888,4 +902,334 @@ background-image: url('/images/resultados.png');
 /* Deshabilitar interacción una vez encontrada para que no abra el tooltip de nuevo */
 .pista-encontrada {
     pointer-events: none; 
+}
+
+:root {
+  --ui-primary: #007bff;     /* Azul principal de la plataforma */
+  --ui-primary-hover: #0056b3;
+  --ui-primary-text: #ffffff;
+  --ui-secondary: #555555;   /* Gris para botones secundarios */
+  --ui-secondary-hover: #333333;
+}
+
+/* BOTONES PRINCIPALES DE LA PLATAFORMA (no tocar .btn-alerta) */
+.btn-comenzar,
+.continuar-btn,
+.btn-finalizar,
+.btn-cerrar-caso {
+  background: var(--ui-primary);
+  color: var(--ui-primary-text);
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-comenzar:hover,
+.continuar-btn:hover,
+.btn-finalizar:hover,
+.btn-cerrar-caso:hover {
+  background: var(--ui-primary-hover);
+  transform: scale(1.03);
+}
+
+/* Ajustes para que todos se vean parecidos */
+.btn-finalizar,
+.btn-cerrar-caso {
+  padding: 12px 28px;
+  font-size: 16px;
+}
+
+/* Tooltip: usar mismo lenguaje visual */
+.btn-si,
+.btn-no,
+.tooltip-cerrar {
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+/* Botón SI: azul principal */
+.btn-si {
+  background: var(--ui-primary);
+  color: var(--ui-primary-text);
+}
+.btn-si:hover {
+  background: var(--ui-primary-hover);
+}
+
+/* Botón NO: gris neutro */
+.btn-no,
+.tooltip-cerrar {
+  background: var(--ui-secondary);
+  color: #ffffff;
+}
+.btn-no:hover,
+.tooltip-cerrar:hover {
+  background: var(--ui-secondary-hover);
+}
+
+/* =========================================
+   PANTALLA DE BIENVENIDA (ESTILO SPLIT-SCREEN)
+========================================= */
+
+/* 1. CONFIGURACIÓN DEL BODY ESPECÍFICO */
+body.bienvenida {
+    background-image: url("/images/bienvenida.png"); /* Asegúrate que esta imagen exista */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 8px;
+    align-items: center;
+    padding: 20px 5%;
+    box-sizing: border-box;
+    
+    overflow-y: auto; /* Permite scroll si la pantalla es chica */
+    cursor: default;  /* Mouse visible */
+}
+
+/* 2. CONTENEDOR PRINCIPAL (La Tarjeta Grande) */
+.perfil-container {
+    background: white;
+    width: 100%;
+    max-width: 900px; /* Ancho para dos columnas */
+    margin: 0 ;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    border-top: 8px solid var(--ui-primary);
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* 3. EL GRID (Estructura de Columnas) */
+.perfil-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 50% Izquierda | 50% Derecha */
+}
+
+/* === COLUMNA IZQUIERDA: NARRATIVA === */
+.columna-narrativa {
+    background-color: #f8f9fa;
+    padding: 40px;
+    border-right: 2px dashed #ccc; /* Línea divisoria vertical */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Elementos de la Narrativa */
+.agencia-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.icono-agencia { font-size: 34px; display: block; margin-bottom: 5px; }
+
+.agencia-header h1 {
+    font-size: 22px;
+    margin: 0;
+    color: var(--ui-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.badge-status {
+    display: inline-block;
+    background: #e9ecef;
+    color: var(--ui-secondary);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+.intro-texto {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #444;
+}
+.intro-texto h3 { color: var(--ui-primary); margin-top: 0; font-size: 22px; }
+
+.intro-texto p {
+    font-size: 19px;   /* ✅ AQUÍ ESTÁ EL AUMENTO (Antes era 15-16px) */
+    line-height: 1.6;  /* Más espacio entre líneas para leer mejor */
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Para la lista de puntos (1. Prueba, 2. Caso...) */
+.intro-texto ul li, 
+.intro-lista li {      /* Ponemos los dos selectores por seguridad */
+    font-size: 18px;   /* ✅ AUMENTO DE LISTA */
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.nota-final {
+    background: #fff;
+    padding: 10px;
+    border-left: 4px solid #ffc107; /* Amarillo */
+    font-size: 14px;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* === COLUMNA DERECHA: FORMULARIO === */
+.columna-formulario {
+    padding: 40px;
+    background-color: white;
+}
+
+.titulo-placa {
+    text-align: center;
+    
+    background: transparent;
+    color: var(--ui-primary); 
+    
+    padding: 0;
+    border-radius: 0;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 22px; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.form-group { margin-bottom: 20px; }
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: #222;
+}
+
+/* Input General */
+.input-grande {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+.input-grande:focus {
+    border-color: var(--ui-primary);
+    outline: none;
+}
+
+/* Opciones GÉNERO (Grid 3 columnas) */
+.opciones-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+.opcion-card { position: relative; cursor: pointer; }
+.opcion-card input { opacity: 0; position: absolute; }
+
+.card-content {
+    display: block;
+    padding: 12px 5px;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+}
+/* Efecto selección */
+.opcion-card input:checked + .card-content {
+    border-color: var(--ui-primary);
+    color: var(--ui-primary);
+    background-color: #f0f7ff;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Opciones EXPERIENCIA (Lista vertical) */
+.opciones-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.opcion-row { position: relative; cursor: pointer; }
+.opcion-row input { opacity: 0; position: absolute; }
+
+.row-content {
+    display: block;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    transition: all 0.2s;
+}
+.row-content strong { display: block; font-size: 15px; }
+.row-content small { display: block; color: #666; font-size: 13px; margin-top: 2px; }
+
+/* Efecto selección */
+.opcion-row input:checked + .row-content {
+    border-color: var(--ui-primary);
+    background-color: #f0f7ff;
+}
+
+/* Checkbox Consentimiento */
+.form-checkbox-container {
+    background: #f1f1f1;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    border: 1px solid #eee;
+}
+.form-checkbox-container label {
+    display: flex; gap: 10px; cursor: pointer; align-items: center;
+}
+.form-checkbox-container input { transform: scale(1.2); }
+
+/* Botón Final */
+.perfil-container .btn-comenzar {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* =========================================
+   RESPONSIVE (CELULARES Y TABLETS)
+========================================= */
+@media (max-width: 850px) {
+    /* Cambiamos a 1 sola columna vertical */
+    .perfil-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Ajustes Columna Narrativa */
+    .columna-narrativa {
+        border-right: none;
+        border-bottom: 2px dashed #ccc; /* Línea pasa abajo */
+        padding: 30px 20px;
+        text-align: center; /* Centramos texto en móvil */
+    }
+    
+    /* Ocultamos la flecha "derecha" del texto */
+    .nota-final { display: none; } 
+
+    /* Ajustes Columna Formulario */
+    .columna-formulario {
+        padding: 30px 20px;
+    }
+    
+    /* Ajuste Tarjetas en móvil muy pequeño */
+    @media (max-width: 380px) {
+        .opciones-grid { grid-template-columns: 1fr; } /* Género en lista vertical */
+    }
 }
