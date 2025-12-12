@@ -5,25 +5,37 @@
     <form action="/posttest" method="POST" class="test-formulario">
         <input type="hidden" name="userId" value="<%= userId %>">
         <!-- Pregunta 1-->
-         <div class = "pregunta">
-            <p>1. Llega un correo de tu banco indicando que debes cambiar tu contraseña URGENTE. ¿Qué harías?</p>
-            <label class="opcion"><input type= "radio" name="p1" value="A" required> a. Ignoro el correo y nunca ingreso mi clave por ese medio.</label>
-            <label class="opcion"><input type= "radio" name="p1" value="B"> b. Uso el botón que aparece en el correo para cambiar mi contraseña.</label>
-            <label class="opcion"><input type= "radio" name="p1" value="C"> c. Solo doy mi usuario pero no la contraseña</label>
-         </div>
+         <div class="pregunta">
+  <p>1. Recibes un correo que dice ser de tu banco y te pide "actualizar tus datos" haciendo clic en un enlace. ¿Qué es lo más seguro que puedes hacer?</p>
+
+  <label class="opcion">
+    <input type="radio" name="p1" value="A" required>
+    a. No hago clic en el enlace y entro a la página de mi banco escribiendo la dirección yo mismo.
+  </label>
+
+  <label class="opcion">
+    <input type="radio" name="p1" value="B">
+    b. Hago clic en el enlace del correo, pero solo si estoy en el computador de mi casa.
+  </label>
+
+  <label class="opcion">
+    <input type="radio" name="p1" value="C">
+    c. Respondo el correo pidiendo que me confirmen si es verdadero.
+  </label>
+</div>
 
         <!-- Pregunta 2-->
             <div class = "pregunta">
                 <p>2. ¿Cómo identificar si un correo es una estafa? (Selecciona las correctas)</p>
-                <label class ="opcion"><input type="checkbox" name="p2" value="remitente"> Revisar si el asunto del correo indica que es urgente.</label>
-                <label class ="opcion"><input type="checkbox" name="p2" value="urgente">No confiar si tiene botones o links a sitios "oficiales"</label>
-                <label class ="opcion"><input type="checkbox" name="p2" value="logo">Comprobar si es un saludo genérico o personalizado</label>
-                <label class ="opcion"><input type="checkbox" name="p2" value="ortografia"> Verificar si el texto contiene faltas de ortografía.</label>
+                <label class ="opcion"><input type="checkbox" name="p2" value="remitente"> Revisar quién envió el correo (remitente) y si la dirección se ve extraña.</label>
+                <label class ="opcion"><input type="checkbox" name="p2" value="urgente">Desconfiar si el asunto o el mensaje dice cosas como “URGENTE”, “último aviso” o amenazas.</label>
+                <label class ="opcion"><input type="checkbox" name="p2" value="logo"> Confiar en el correo solo porque usa los colores, imágenes y el logo del banco.</label>
+                <label class ="opcion"><input type="checkbox" name="p2" value="ortografia"> Revisar si el saludo va dirigido a mí o es genérico</label>
             </div>
 
         <!-- Pregunta 3 verdadero/Falso-->
             <div class = "pregunta">
-                <p>3. Si tu computador tiene el mejor antivirus del mercado, ¿Puedes hacer clic en cualquier enlace sin preocuparte?</p>
+                <p>3. Si tu computador tiene el mejor antivirus que existe, ¿Puedes hacer clic en cualquier enlace sin preocuparte?</p>
                 <label class="opcion"><input type="radio" name="p3" value="V" required> Verdadero</label>
                 <label class="opcion"><input type="radio" name="p3" value="F"> Falso</label>
             </div>
@@ -110,7 +122,13 @@
 
         <!-- Pregunta S2 -->
 <div class="pregunta">
-    <p>2. ¿Qué tan útil te pareció el simulador?</p>
+    <p>
+        2. ¿Qué tan útil te pareció el simulador?
+        <br>
+        <span style="font-size: 0.9em; color: #666; font-weight: normal;">
+            (1 = Nada útil 👎 ... 5 = Muy útil 👍)
+        </span>
+    </p>
 
     <div class="likert-grid">
         <label class="likert-opcion"><input type="radio" name="s2" value="1" required><span class="texto">1</span></label>
@@ -121,9 +139,14 @@
     </div>
 </div>
 
-<!-- Pregunta S3 -->
 <div class="pregunta">
-    <p>3. ¿Qué tan clara fue la retroalimentación entregada en el simulador?</p>
+    <p>
+        3. ¿Qué tan clara fue la retroalimentación entregada?
+        <br>
+        <span style="font-size: 0.9em; color: #666; font-weight: normal;">
+            (1 = Confusa 👎 ... 5 = Muy Clara 👍)
+        </span>
+    </p>
 
     <div class="likert-grid">
         <label class="likert-opcion"><input type="radio" name="s3" value="1" required><span class="texto">1</span></label>
@@ -134,9 +157,14 @@
     </div>
 </div>
 
-<!-- Pregunta S4 -->
 <div class="pregunta">
-    <p>4. ¿Qué tan satisfecho(a) estás con la experiencia general?</p>
+    <p>
+        4. ¿Qué tan satisfecho(a) estás con la experiencia general?
+        <br>
+        <span style="font-size: 0.9em; color: #666; font-weight: normal;">
+            (1 = Insatisfecho 👎 ... 5 = Muy Satisfecho 👍)
+        </span>
+    </p>
 
     <div class="likert-grid">
         <label class="likert-opcion"><input type="radio" name="s4" value="1" required><span class="texto">1</span></label>
@@ -146,7 +174,6 @@
         <label class="likert-opcion"><input type="radio" name="s4" value="5"><span class="texto">5</span></label>
     </div>
 </div>
-
 
          <!-- Botón enviar -->
         <button type="submit" class="continuar-btn">Enviar resultados</button>

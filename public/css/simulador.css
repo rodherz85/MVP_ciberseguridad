@@ -83,7 +83,7 @@ body.pretest, body.posttest {
   pointer-events: none;
   transform: translate(-50%, -50%);
   display: none;
-  z-index: 9999;
+  z-index: 9999 !important;
 }
 
 /* ==================================================
@@ -95,7 +95,7 @@ body.pretest, body.posttest {
   pointer-events: none;
   transform: translate(-50%, -50%);
   display: none;
-  z-index: 100;
+  z-index: 9999 !important;
 }
 
 /* ==================================================
@@ -642,204 +642,186 @@ body.bienvenida {
 
 /*=== RESULTADOS  ===*/
 /* =========================================
-   PANTALLA DE RESULTADOS (CORREGIDO)
+   PANTALLA DE RESULTADOS (ESTILO CARD)
 ========================================= */
 
-/* 1. Fondo Principal */
+/* 1. CONFIGURACIÓN DEL FONDO Y CENTRADO */
 body.resultados {
-background-image: url('/images/resultados.png');
+    background-image: url('/images/resultados.png'); /* Tu fondo */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+    
     min-height: 100vh;
     margin: 0;
-    font-family: 'Courier New', Courier, monospace;
-    position: relative;
-    overflow: hidden; 
-}
-
-/* 2. Título Flotante (Fuera del papel) */
-.titulo-externo {
-    position: absolute;
-    top: 3%; 
-    width: 100%;
-    text-align: center;
-    color: #fff;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 40px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-    margin: 0;
-    z-index: 10;
-}
-
-/* 3. La "Hoja de Papel" */
-.pizarra-informe {
-    position: absolute;
-    /* Ubicación ajustada para dejar espacio al título */
-    top: 15%; 
-    left: 22%;
-    width: 50%;
-    height: 60%;
+    font-family: 'Roboto', sans-serif; /* Fuente más moderna que Courier */
     
-    background-color: rgba(255, 255, 245, 0.95);
-    padding: 20px 30px;
-    box-shadow: 3px 3px 15px rgba(0,0,0,0.4);
-    border-radius: 2px;
+    /* CENTRADO PERFECTO DE LA TARJETA */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 2. LA TARJETA (CARD) */
+.card-resultados {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 1000px; /* Ancho máximo para que se vea bien en PC */
+    height: 85vh;      /* Ocupa el 85% del alto de la pantalla */
+    
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5); /* Sombra elegante */
     
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Para ordenar Título - Lista - Footer */
+    overflow: hidden; /* Para que nada se salga de los bordes redondeados */
+    position: relative;
 }
 
-/* 4. Lista de Evidencias (Scrollable) */
-.lista-evidencias {
-    list-style: none;
-    padding: 0;
+/* 3. ENCABEZADO DE LA TARJETA */
+.header-resultados {
+    background-color: var(--ui-primary, #0056b3); /* Usa tu azul principal */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    flex-shrink: 0; /* No se encoge */
+}
+
+.titulo-resultados {
     margin: 0;
-    text-align: left;
-    font-size: 16px;
-    
-    flex-grow: 1; /* Ocupa el espacio disponible */
-    overflow-y: auto; 
-    padding-right: 5px; 
+    font-size: 28px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Scrollbar personalizado */
-.lista-evidencias::-webkit-scrollbar { width: 6px; }
-.lista-evidencias::-webkit-scrollbar-track { background: #f1f1f1; }
-.lista-evidencias::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
-.lista-evidencias::-webkit-scrollbar-thumb:hover { background: #888; }
+/* 4. LISTA DE EVIDENCIAS (AREA CENTRAL) */
+.contenedor-lista {
+    flex-grow: 1; /* Ocupa todo el espacio sobrante */
+    overflow-y: auto; /* Scroll interno si hay muchos items */
+    padding: 20px 30px;
+    background-color: #f9f9f9;
+}
 
-/* 5. Items (GRID 3 COLUMNAS) */
+/* Estilo del Scrollbar para que se vea bonito */
+.contenedor-lista::-webkit-scrollbar { width: 8px; }
+.contenedor-lista::-webkit-scrollbar-track { background: #f1f1f1; }
+.contenedor-lista::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+/* 5. ESTRUCTURA DE 3 COLUMNAS (TU REQUISITO) */
 .item-evidencia {
     display: grid;
-    /* Ajuste de columnas: Nombre | Puntos | Feedback */
-    grid-template-columns: 1.2fr 0.5fr 1.5fr; 
+    /* Columna 1 (Nombre): 2 partes | Columna 2 (Puntos): 1 parte | Columna 3 (Feedback): 4 partes */
+    grid-template-columns: 1.5fr 0.6fr 4fr; 
     align-items: center;
-    gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px dashed #ccc;
+    gap: 15px;
+    
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.item-evidencia:last-child { border-bottom: none; }
-
-/* Columna 1: Info */
+/* Columna 1: Nombre */
 .info-pista {
     display: flex;
     align-items: center;
-    gap: 8px;
-}
-.nombre-pista {
+    gap: 10px;
     font-weight: bold;
-    color: #333;
-    font-size: 1.1em;
+    color: black;
+    font-size: 16px;
 }
+.icono-resultado { font-size: 24px; }
 
 /* Columna 2: Puntos */
 .detalle-puntos {
-    font-size: 18px;
-    font-weight: bold;
     text-align: center;
-    min-width: 60px;
+    font-weight: bold;
+    font-size: 18px;
+    background: #f0f0f0;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 /* Columna 3: Feedback */
 .columna-feedback {
-    font-size: 14px;
-    color: #444;
-    font-style: italic;
-    line-height: 1.3;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.4;
+    color: black
 }
 
-/* Colores */
+/* Colores de texto */
 .texto-verde { color: #28a745; }
 .texto-amarillo { color: #d39e00; }
 .texto-rojo { color: #dc3545; }
 
-/* 6. Footer del Puntaje (NUEVO: Recto y al final) */
-.footer-puntaje {
+/* 6. FOOTER DE LA TARJETA (PUNTAJE Y BOTÓN) */
+.footer-resultados {
+    background-color: white;
+    padding: 20px 30px;
+    border-top: 1px solid #ddd;
     display: flex;
-    justify-content: flex-end; /* Alineado a la derecha */
+    justify-content: space-between; /* Puntaje a la izq, Botón a la der */
     align-items: center;
-    gap: 15px;
-    margin-top: 15px;
-    padding-top: 5px;
+    flex-shrink: 0;
 }
 
-.texto-obtuviste {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    text-transform: uppercase;
+.bloque-puntaje {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .sello-puntaje {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
-    color: #d9534f;
-    border: 3px solid #d9534f;
-    padding: 5px 20px;
-    border-radius: 8px;
-    
-    /* CORRECCIÓN: Quitamos la rotación (-5deg) para que esté recto */
-    transform: none; 
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-/* 7. Botón Flotante (Fuera del papel) */
-.contenedor-boton-final {
-    position: fixed;
-    bottom: 30px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    z-index: 100;
+    color: var(--ui-primary, #0056b3);
 }
 
 .btn-cerrar-caso {
-    display: inline-block;
-    background: #007bff; 
+    background: var(--ui-primary, #0056b3);
     color: white;
-    padding: 15px 40px;
+    padding: 12px 30px;
     border-radius: 50px;
     text-decoration: none;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
     font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    border: 2px solid rgba(255,255,255,0.2);
-    transition: transform 0.2s, background 0.2s;
+    font-size: 16px;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
 }
-
 .btn-cerrar-caso:hover {
-    background: #0056b3;
-    transform: scale(1.05);
+    background: #004494;
 }
 
-/* Responsive para celulares */
+/* =========================================
+   RESPONSIVE (CELULARES)
+========================================= */
 @media (max-width: 768px) {
-    body.resultados {
-        overflow: auto; /* Permitir scroll en celular */
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .card-resultados {
+        height: auto; /* En celular que crezca lo que necesite */
+        max-height: 95vh;
     }
-    .pizarra-informe {
-        position: relative;
-        top: auto; left: auto;
-        width: 90%; height: auto;
-        margin: 20px 0 80px 0; /* Margen abajo para el botón flotante */
-        transform: none;
-    }
+    
     .item-evidencia {
-        /* En celular, pasamos a 1 sola columna vertical */
-        grid-template-columns: 1fr;
+        /* En celular rompemos las 3 columnas y apilamos */
+        grid-template-columns: 1fr; 
         text-align: center;
         gap: 5px;
     }
-    .info-pista { justify-content: center; }
-    .detalle-puntos { text-align: center; }
+    
+    .info-pista { justify-content: center; margin-bottom: 5px; }
+    
+    .footer-resultados {
+        flex-direction: column;
+        gap: 15px;
+    }
 }
 
 /* =========================================
@@ -1232,4 +1214,133 @@ body.bienvenida {
     @media (max-width: 380px) {
         .opciones-grid { grid-template-columns: 1fr; } /* Género en lista vertical */
     }
+}
+
+
+
+
+/* === TUTORIAL OVERLAY (VERTICAL Y LIMPIO) === */
+
+.tutorial-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50000;
+  backdrop-filter: blur(3px);
+  transition: opacity 0.3s ease;
+}
+
+.tutorial-overlay.oculto {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tutorial-card {
+  width: 90%;
+  max-width: 500px; /* Más angosto para que parezca una lista vertical elegante */
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+  border-top: 6px solid var(--ui-primary);
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  text-align: center;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.tutorial-titulo {
+  margin: 0 0 10px;
+  font-size: 22px;
+  text-transform: uppercase;
+  color: #333;
+  font-weight: 800;
+}
+
+.tutorial-intro {
+  margin: 0 0 20px;
+  font-size: 15px;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+/* --- LISTA VERTICAL (TU PEDIDO) --- */
+.tutorial-steps-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 1 SOLA COLUMNA VERTICAL */
+    gap: 15px;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.tutorial-bloque {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 5px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tutorial-bloque h3 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  color: var(--ui-primary);
+  text-transform: uppercase;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tutorial-bloque p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  padding-left: 34px; /* Alineación con el texto del título */
+}
+
+/* Botones */
+.tutorial-acciones { margin-top: 10px; }
+
+.btn-comenzar-mision {
+  background: var(--ui-primary);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 40px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-comenzar-mision:hover { background: #0056b3; }
+
+/* Botón flotante HUD */
+.btn-tutorial-hud {
+  position: absolute;
+  top: 15px; right: 15px; z-index: 60;
+  background: rgba(44, 62, 80, 0.9);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+}
+
+/* === REGLA MAESTRA DEL CURSOR === */
+/* Cuando esta clase está en el body, se ve la flecha normal y se ignora el "none" */
+body.tutorial-abierto,
+body.tutorial-abierto * {
+    cursor: default !important;
 }

@@ -23,7 +23,10 @@ const usuarioSchema = new mongoose.Schema({
         fechaFin: Date,
 
         pretest: {
-            respuestas: Object
+            respuestas: Object, 
+            puntaje: Number,
+            detalle: Object,
+            fechaRendicion: Date
         },
 
         simulador: {
@@ -45,14 +48,17 @@ const usuarioSchema = new mongoose.Schema({
         },
 
         posttest: {
-            respuestas: Object
+            respuestas: Object,
+            puntaje: Number,
+            detalle: Object,
+            fechaRendicion: Date
         },
 
         encuestaSatisfaccion: {
             interes: String,
-            utilidad: String,
-            claridadRetro: String,
-            satisfaccion: String    
+            utilidad: Number,
+            claridadRetro: Number,
+            satisfaccion: Number    
         },
             
         

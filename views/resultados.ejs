@@ -1,49 +1,46 @@
 <% layout('simulador_layout') %>
 
-<h1 class="titulo-externo">INFORME FINAL</h1>
-
-<div class="pizarra-informe">
+<div class="card-resultados">
     
-    <div class="item-evidencia" style="border-bottom: 2px solid #333; margin-bottom: 10px; padding-bottom: 10px;">
-        <div style="font-weight: bold; color: #333; text-transform: uppercase; font-size: 14px; text-align: center;">PISTA</div>
-        <div style="font-weight: bold; color: #333; text-transform: uppercase; font-size: 14px; text-align: center;">PUNTAJE</div>
-        <div style="font-weight: bold; color: #333; text-transform: uppercase; font-size: 14px; text-align: center;">FEEDBACK</div>
+    <div class="header-resultados">
+        <h1 class="titulo-resultados">INFORME DE MISIÓN</h1>
     </div>
 
-    <ul class="lista-evidencias">
-        <% evidencias.forEach(function(item) { %>
-            <li class="item-evidencia">
+    <div class="contenedor-lista">
+        
+        <% evidencias.forEach(function(evidencia) { %>
+            <div class="item-evidencia">
                 
                 <div class="info-pista">
-                    <span style="font-size: 1.5em; width: 30px; text-align: center;"><%= item.icono %></span>
-                    <span class="nombre-pista"><%= item.nombre %></span>
+                    <span class="icono-resultado"><%= evidencia.icono %></span>
+                    <span><%= evidencia.nombre %></span>
                 </div>
 
-                <div class="detalle-puntos <%= item.clase %>" style="text-align: center; width: 100%;">
-                    +<%= item.puntos %>
+                <div class="detalle-puntos <%= evidencia.claseColor %>">
+                    <%= evidencia.puntos %> pts
                 </div>
 
                 <div class="columna-feedback">
-                    <%= item.feedback %>
+                    <%= evidencia.feedback %>
                 </div>
-
-            </li>
+                
+            </div>
         <% }); %>
-    </ul>
 
-    <hr style="border: 0; border-top: 2px solid #333; margin-top: auto;">
-
-    <div class="footer-puntaje">
-        <span class="texto-obtuviste">Obtuviste:</span>
-        <div class="sello-puntaje">
-            <%= puntajeObtenido %> / <%= puntajeMax%> PTS
-        </div>
     </div>
 
-</div>
+    <div class="footer-resultados">
+        
+        <div class="bloque-puntaje">
+            <span style="font-size: 14px; color: #666; text-transform: uppercase;">Calificación Final:</span>
+            <span class="sello-puntaje">
+                <%= puntajeObtenido %> / <%= puntajeMax %>
+            </span>
+        </div>
 
-<div class="contenedor-boton-final">
-    <a href="/" class="btn-cerrar-caso">
-        📁 ARCHIVAR CASO Y SALIR
-    </a>
+        <a href="/" class="btn-cerrar-caso">
+            FINALIZAR ENTRENAMIENTO
+        </a>
+    </div>
+
 </div>

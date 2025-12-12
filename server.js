@@ -48,6 +48,8 @@ app.post("/comenzar", async (req, res) => {
   try {
     const nuevoUsuario = new Usuario({
       edad: req.body.edad,
+      genero: req.body.genero,
+      experiencia: req.body.experiencia,
       consentimiento: req.body.consentimiento === 'on'
     });
     await nuevoUsuario.save();
@@ -71,11 +73,21 @@ app.get("/pretest", (req, res) => {
 });
 
 app.post("/pretest", async (req, res) => {
-  const { userId, ...respuestas } = req.body;
-  try {
-    await Usuario.findByIdAndUpdate(userId, {
-      pretest: { respuestas: respuestas }
+  try{
+  const { userId, ...respuestasRaw } = req.body;
+  const resultados = calcularPuntaje(respuestasRaw);
+
+  await Usuario.findByIdAndUpdate(userId, {
+      pretest: { 
+        respuestas: respuestasRaw,
+        puntaje: resultados.puntajeCognitivo,
+        detalle: resultados.detalle,
+        fechaRendicion: new Date()
+      }
     });
+
+    console.log(`Pretest guardado para el usuario ${userId}. Puntaje: ${resultados.puntajeCognitivo}`);
+
     res.redirect(`/correo?uid=${userId}`);
   } catch (error) {
     console.error(error);
@@ -137,17 +149,27 @@ app.get("/posttest", (req, res) => {
 });
 
 app.post("/posttest", async (req, res) => {
-  const { userId, s1, s2, s3, s4, ...respuestasTest } = req.body;
+  const { userId, s1, s2, s3, s4, ...respuestasRaw } = req.body;
 
   try {
+    const resultados = calcularPuntaje(respuestasRaw);
     await Usuario.findByIdAndUpdate(userId, {
-      "posttest.respuestas": respuestasTest,
-      "encuestaSatisfaccion.interes": s1,
-      "encuestaSatisfaccion.utilidad": s2,
-      "encuestaSatisfaccion.claridadRetro": s3,
-      "encuestaSatisfaccion.satisfaccion": s4,
+      posttest:{
+        respuestas: respuestasRaw,
+        puntaje: resultados.puntajeCognitivo,
+        detalle: resultados.detalle,
+        fechaRendicion: new Date()
+      },
+
+      encuestaSatisfaccion:{
+        interes: s1,
+        utilidad: s2,
+        claridadRetro: s3,
+        satisfaccion: s4
+      },
       fechaFin: Date.now()
     });
+    console.log(`Posttest y encuesta guardados para el usuario ${userId}. Puntaje: ${resultados.puntajeCognitivo}`);
     res.redirect(`/resultados?uid=${userId}`);
   } catch (error) {
     console.error(error);
@@ -155,6 +177,8 @@ app.post("/posttest", async (req, res) => {
   }
 });
 
+
+// RUTA DE RESULTADOS
 app.get("/resultados", async(req, res) => {
   const userId = req.query.uid;
   if (!userId) return res.redirect("/");
@@ -177,7 +201,7 @@ app.get("/resultados", async(req, res) => {
         key: 'estadoRemitente', 
         nombre: 'Remitente falso',
         mensajes: {
-          acierto: "Muy bien, viste que el remitente del correo no provenía del sitio oficial del banco.",
+          acierto: "Buen trabajo, viste que el remitente del correo no provenía del sitio oficial del banco.",
           fallo: "Ojo, lo viste pero no lo consideraste un riesgo. Siempre verifica el remitente del correo, debe ser del sitio oficial",
           no_visto: "Se te pasó! Siempre debes estar atento a quien envía el correo."
         }
@@ -350,12 +374,54 @@ app.get("/demo-resultados", (req, res) => {
         title: "Informe Demo",
         bodyClass: "resultados",
         puntajeObtenido: 30,
-        puntajeMaximo: 48,
+        puntajeMax: 48,
         evidencias: evidenciasFalsas 
     });
 });
 
+function calcularPuntaje(datos) {
+    const p1 = datos.p1 === 'A' ? 20 : 0;
 
+    let marcadas = datos.p2;
+    if (!Array.isArray(marcadas)) {
+        marcadas = marcadas ? [marcadas] : [];
+    }
+    const correctas = ['remitente', 'urgente', 'ortografia'];
+    const marcoLogo = marcadas.includes('logo');
+    const numCorrectasMarcadas = marcadas.filter(v => correctas.includes(v)).length;
+
+    let p2 = 0;
+    if (!marcoLogo) {
+        if (numCorrectasMarcadas === 3) p2 = 20;
+        else if (numCorrectasMarcadas === 2) p2 = 15;
+        else if (numCorrectasMarcadas === 1) p2 = 5;
+        else p2 = 0;
+
+    }else{
+        p2 = 0;
+    }
+
+
+    const p3 = datos.p3 === 'F' ? 20 : 0;
+
+    const sumaCognitiva = p1 + p2 + p3; //0-60 pts
+
+    //Funcion para Likert 1-5  = 0-20
+
+
+    const val_p4 = Number(datos.p4);
+    const val_p5 = Number(datos.p5);
+
+    return{
+        puntajeCognitivo: sumaCognitiva,
+        detalle:{
+            p1_score: p1,
+            p2_score: p2,
+            p3_score: p3,
+            p4_likert: val_p4,
+            p5_likert: val_p5}
+    }
+}
 
 
 // --- INICIO DEL SERVIDOR ---

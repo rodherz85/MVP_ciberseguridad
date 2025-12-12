@@ -288,3 +288,102 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+
+
+function calcularPuntaje(datos) {
+    const p1 = datos.p1 === 'A' ? 20 : 0;
+
+    let marcadas = datos.p2;
+    if (!Array.isArray(marcadas)) {
+        marcadas = marcadas ? [marcadas] : [];
+    }
+    const correctas = ['remitente', 'urgente', 'ortografia'];
+    const marcoLogo = marcadas.includes('logo');
+    const numCorrectasMarcadas = marcadas.filter(v => correctas.includes(v)).length;
+
+    let p2 = 0;
+    if (!marcoLogo) {
+        if (numCorrectasMarcadas === 3) p2 = 20;
+        else if (numCorrectasMarcadas === 2) p2 = 15;
+        else if (numCorrectasMarcadas === 1) p2 = 5;
+        else p2 = 0;
+
+    }else{
+        p2 = 0;
+    }
+
+
+    const p3 = datos.p3 === 'F' ? 20 : 0;
+
+    const sumaCognitiva = p1 + p2 + p3; //0-60 pts
+
+    //Funcion para Likert 1-5  = 0-20
+
+
+    const val_p4 = Number(datos.p4);
+    const val_p5 = Number(datos.p5);
+
+    return{
+        puntajeCognitivo: sumaCognitiva,
+        detalle:{
+            p1_score: p1,
+            p2_score: p2,
+            p3_score: p3,
+            p4_likert: val_p4,
+            p5_likert: val_p5}
+    }
+}
+
+
+/* =========================================
+   LÓGICA DEL TUTORIAL Y CONTROL DE CURSOR
+   ========================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("tutorial-overlay");
+  const btnCerrar = document.getElementById("btn-cerrar-tutorial");
+  const btnVer = document.getElementById("btn-ver-tutorial");
+  const lupaImg = document.getElementById("lupa-img");
+  const manoImg = document.getElementById("mano-img");
+
+  // --- FUNCIONES DE CONTROL ---
+
+  // Función para ABRIR tutorial y mostrar cursor normal
+  function abrirTutorialUI() {
+      if (overlay) overlay.classList.remove("oculto");
+      // Agregamos clase al body para que el CSS fuerce el cursor normal
+      document.body.classList.add("tutorial-abierto");
+      
+      // Escondemos temporalmente las herramientas custom para que no tapen el texto
+      if (lupaImg) lupaImg.style.display = 'none';
+      if (manoImg) manoImg.style.display = 'none';
+      
+      // Congelamos la lógica de la lupa para que no detecta nada mientras leen
+      freeze = true; 
+  }
+
+  // Función para CERRAR tutorial y volver a la lupa
+  function cerrarTutorialUI() {
+      if (overlay) overlay.classList.add("oculto");
+      // Quitamos la clase, el CSS vuelve a ocultar el cursor normal
+      document.body.classList.remove("tutorial-abierto");
+      
+      // Descongelamos la lógica. Al mover el mouse, la lupa reaparecerá sola.
+      freeze = false;
+  }
+
+  // --- EVENT LISTENERS ---
+
+  if (btnCerrar) {
+    btnCerrar.addEventListener("click", cerrarTutorialUI);
+  }
+
+  if (btnVer) {
+    btnVer.addEventListener("click", abrirTutorialUI);
+  }
+
+  // --- ESTADO INICIAL ---
+  // Si al cargar la página el tutorial está visible, aseguramos el cursor normal
+  if (overlay && !overlay.classList.contains('oculto')) {
+      abrirTutorialUI();
+  }
+});

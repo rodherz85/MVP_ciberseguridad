@@ -22,6 +22,59 @@
 <!-- MONITOR SIMULADO (ÁREA INTERACTIVA) -->
 <div id="contenido-mvp">
 
+    <button id="btn-ver-tutorial" class="btn-tutorial-hud" title="Repasar instrucciones">
+    <i class="fa-solid fa-circle-info"></i> VER MISIÓN
+</button>
+
+<div id="tutorial-overlay" class="tutorial-overlay">
+    <div class="tutorial-card">
+        
+        <h2 class="tutorial-titulo">
+            <i class="fa-solid fa-user-secret"></i> Misión: Detectar el Fraude
+        </h2>
+
+        <p class="tutorial-intro">
+            Agente, hemos interceptado un correo sospechoso de fraude.<br>
+            Tu objetivo es analizarlo antes de que cause daños.
+        </p>
+
+        <div class="tutorial-steps-grid">
+            
+            <div class="tutorial-bloque">
+                <h3><i class="fa-solid fa-magnifying-glass"></i> 1. Explora con la Lupa</h3>
+                <p>Tu mouse es la lupa. Pásalo por textos, logos y enlaces para revelar detalles ocultos.</p>
+            </div>
+
+            <div class="tutorial-bloque">
+                <h3><i class="fa-regular fa-clock"></i> 2. Detecta</h3>
+                <p>Mantén la lupa <strong>quieta</strong> sobre un elemento sospechoso para analizarlo.</p>
+            </div>
+
+            <div class="tutorial-bloque">
+                <h3><i class="fa-solid fa-gavel"></i> 3. Decide</h3>
+                <p>El sistema te preguntará si lo consideras un riesgo o no. Confía en tu instinto y responde.</p>
+            </div>
+
+            <div class="tutorial-bloque">
+                <h3><i class="fa-solid fa-list-check"></i> 4. Completa la Misión</h3>
+                <p>Intenta encontrar las <strong>8 pistas</strong> del contador. Si no puedes más, presiona <strong>"Terminar Análisis"</strong> cuando quieras.</p>
+            </div>
+
+        </div>
+
+        <div class="tutorial-acciones">
+            <button id="btn-cerrar-tutorial" class="btn-comenzar-mision">
+                ENTENDIDO, INICIAR ANÁLISIS <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+
+        
+
+    </div>
+</div>
+
+    
+
     <div class="correo">
 
         <!-- ===== META (ASUNTO + REMITENTE) ===== -->
@@ -143,6 +196,8 @@
 
     <!-- LUPA -->
     <img src="/images/lupa.png" id="lupa-img">
+    
+    
 
 </div>
 
