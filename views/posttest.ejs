@@ -1,182 +1,348 @@
 <% layout('simulador_layout') %>
 
-<div class = "test-contenedor">
-    <h2 class="test-titulo">Test Final y Encuesta</h2>
-    <form action="/posttest" method="POST" class="test-formulario">
-        <input type="hidden" name="userId" value="<%= userId %>">
-        <!-- Pregunta 1-->
-         <div class="pregunta">
-  <p>1. Recibes un correo que dice ser de tu banco y te pide "actualizar tus datos" haciendo clic en un enlace. ¿Qué es lo más seguro que puedes hacer?</p>
+<div class="test-contenedor">
+  <h2 class="test-titulo">Evaluación Final</h2>
 
-  <label class="opcion">
-    <input type="radio" name="p1" value="A" required>
-    a. No hago clic en el enlace y entro a la página de mi banco escribiendo la dirección yo mismo.
-  </label>
+  <div class="test-progress">
+    <div class="test-progress-fill" id="testProgressFill"></div>
+  </div>
 
-  <label class="opcion">
-    <input type="radio" name="p1" value="B">
-    b. Hago clic en el enlace del correo, pero solo si estoy en el computador de mi casa.
-  </label>
+  <form action="/posttest" method="POST" class="test-formulario" id="posttestForm">
+    <input type="hidden" name="userId" value="<%= userId %>">
 
-  <label class="opcion">
-    <input type="radio" name="p1" value="C">
-    c. Respondo el correo pidiendo que me confirmen si es verdadero.
-  </label>
-</div>
+    <div class="test-slide activa" data-step="1">
+      <div class="pregunta">
+        <span class="question-number">Pregunta 1</span>
+        <p class="question-title">
+          Recibes un correo que dice ser de tu banco y te pide "actualizar tus datos" haciendo clic en un enlace. ¿Qué es lo más seguro que puedes hacer?
+        </p>
 
-        <!-- Pregunta 2-->
-            <div class = "pregunta">
-                <p>2. ¿Cómo identificar si un correo es una estafa? (Selecciona las correctas)</p>
-                <label class ="opcion"><input type="checkbox" name="p2" value="remitente"> Revisar quién envió el correo (remitente) y si la dirección se ve extraña.</label>
-                <label class ="opcion"><input type="checkbox" name="p2" value="urgente">Desconfiar si el asunto o el mensaje dice cosas como “URGENTE”, “último aviso” o amenazas.</label>
-                <label class ="opcion"><input type="checkbox" name="p2" value="logo"> Confiar en el correo solo porque usa los colores, imágenes y el logo del banco.</label>
-                <label class ="opcion"><input type="checkbox" name="p2" value="ortografia"> Revisar si el saludo va dirigido a mí o es genérico</label>
-            </div>
-
-        <!-- Pregunta 3 verdadero/Falso-->
-            <div class = "pregunta">
-                <p>3. Si tu computador tiene el mejor antivirus que existe, ¿Puedes hacer clic en cualquier enlace sin preocuparte?</p>
-                <label class="opcion"><input type="radio" name="p3" value="V" required> Verdadero</label>
-                <label class="opcion"><input type="radio" name="p3" value="F"> Falso</label>
-            </div>
-
-        <!-- Pregunta 4 Likert emocional-->
-            <div class="pregunta">
-    <p>4. ¿Cómo te sientes AHORA si recibes un correo que te solicita acciones urgentes?</p>
-
-    <div class="likert-grid">
-        <label class="likert-opcion">
-            <input type="radio" name="p4" value="1" required>
-            <span class="emoji">😎</span>
-            <span class="texto">Muy tranquilo(a)</span>
+        <label class="opcion-card">
+          <input type="radio" name="p1" value="A" required>
+          <span class="opcion-texto">
+             <span class="opcion-letra">a</span>
+             No hago clic en el enlace y entro a la página de mi banco escribiendo la dirección yo mismo.
+          </span>
         </label>
 
-        <label class="likert-opcion">
-            <input type="radio" name="p4" value="2">
-            <span class="emoji">😊</span>
-            <span class="texto">Tranquilo(a)</span>
+        <label class="opcion-card">
+          <input type="radio" name="p1" value="B">
+          <span class="opcion-texto">
+             <span class="opcion-letra">b</span>
+             Hago clic en el enlace del correo, pero solo si estoy en el computador de mi casa.
+          </span>
         </label>
 
-        <label class="likert-opcion">
-            <input type="radio" name="p4" value="3">
-            <span class="emoji">😐</span>
-            <span class="texto">Neutro</span>
+        <label class="opcion-card">
+          <input type="radio" name="p1" value="C">
+          <span class="opcion-texto">
+             <span class="opcion-letra">c</span>
+             Respondo el correo pidiendo que me confirmen si es verdadero.
+          </span>
         </label>
-
-        <label class="likert-opcion">
-            <input type="radio" name="p4" value="4">
-            <span class="emoji">😥</span>
-            <span class="texto">Preocupado(a)</span>
-        </label>
-
-        <label class="likert-opcion">
-            <input type="radio" name="p4" value="5">
-            <span class="emoji">😩</span>
-            <span class="texto">Muy ansioso</span>
-        </label>
+      </div>
+      <div class="test-nav">
+        <button type="button" class="btn-step btn-siguiente" data-next="2">Continuar →</button>
+      </div>
     </div>
-</div>
-        <!-- Pregunta 5 Likert emocional-->
-            <div class = "pregunta">
-                <p>5. ¿Qué tan preparado(a) se siente para identificar fraudes por internet?</p>
-                <div class="likert-grid">
-                    <label class="likert-opcion">
-                        <input type="radio" name="p5" value="1" required>
-                        <span class="emoji">😎</span>
-                        <span class="texto">Muy Preparado(a)</span>
-                    </label>
-                    <label class="likert-opcion">
-                        <input type="radio" name="p5" value="2">
-                        <span class="emoji">😊</span>
-                        <span class="texto">Preparado(a)</span>
-                    </label>
-                    <label class="likert-opcion">
-                        <input type="radio" name="p5" value="3">
-                        <span class="emoji">😐</span>
-                        <span class="texto">Neutro</span>
-                    </label>
-                    <label class="likert-opcion">
-                        <input type="radio" name="p5" value="4">
-                        <span class="emoji">😥</span>
-                        <span class="texto">Poco Preparado</span>
-                    </label>
-                    <label class="likert-opcion">
-                        <input type="radio" name="p5" value="5">
-                        <span class="emoji">😩</span>
-                        <span class="texto">Nada Preparado(a)</span>
-                    </label>
-                </div>
-                
-            </div>
 
-        <!--Sección Encuesta-->
+    <div class="test-slide" data-step="2">
+      <div class="pregunta">
+        <span class="question-number">Pregunta 2</span>
+        <p class="question-title">
+          ¿Cómo identificar si un correo es una estafa?
+        </p>
+        <p class="question-subtitle">Selecciona las correctas.</p>
 
-        <h3 class="test-titulo" style="margin-top: 40px;">Encuesta de Satisfacción</h3>
+        <label class="opcion-card">
+          <input type="checkbox" name="p2" value="remitente">
+          <span class="opcion-texto">Revisar quién envió el correo (remitente) y si la dirección se ve extraña.</span>
+        </label>
+        <label class="opcion-card">
+          <input type="checkbox" name="p2" value="urgente">
+          <span class="opcion-texto">Desconfiar si el asunto dice cosas como “URGENTE” o amenazas.</span>
+        </label>
+        <label class="opcion-card">
+          <input type="checkbox" name="p2" value="logo">
+          <span class="opcion-texto">Confiar en el correo solo porque usa los colores y el logo del banco.</span>
+        </label>
+        <label class="opcion-card">
+          <input type="checkbox" name="p2" value="ortografia">
+          <span class="opcion-texto">Revisar si el saludo va dirigido a mí o es genérico.</span>
+        </label>
+      </div>
+      <div class="test-nav">
+        <button type="button" class="btn-step btn-anterior" data-prev="1">← Atrás</button>
+        <button type="button" class="btn-step btn-siguiente" data-next="3">Continuar →</button>
+      </div>
+    </div>
 
-        <!-- Pregunta S1 (sí/no que pediste) -->
-        <div class="pregunta">
-            <p>1. ¿Te gustaría una versión que te prepare para estafas en SMS o redes sociales?</p>
-            <label class="opcion"><input type="radio" name="s1" value="SI" required> Sí</label>
-            <label class="opcion"><input type="radio" name="s1" value="NO"> No</label>
+    <div class="test-slide" data-step="3">
+      <div class="pregunta">
+        <span class="question-number">Pregunta 3</span>
+        <p class="question-title">
+          Si tu computador tiene el mejor antivirus que existe, ¿puedes hacer clic en cualquier enlace sin preocuparte?
+        </p>
+        <div class="options-inline">
+          <label class="opcion-card">
+            <input type="radio" name="p3" value="V" required>
+            <span class="opcion-texto grande">Verdadero</span>
+          </label>
+          <label class="opcion-card">
+            <input type="radio" name="p3" value="F">
+            <span class="opcion-texto grande">Falso</span>
+          </label>
         </div>
-
-        <!-- Pregunta S2 -->
-<div class="pregunta">
-    <p>
-        2. ¿Qué tan útil te pareció el simulador?
-        <br>
-        <span style="font-size: 0.9em; color: #666; font-weight: normal;">
-            (1 = Nada útil 👎 ... 5 = Muy útil 👍)
-        </span>
-    </p>
-
-    <div class="likert-grid">
-        <label class="likert-opcion"><input type="radio" name="s2" value="1" required><span class="texto">1</span></label>
-        <label class="likert-opcion"><input type="radio" name="s2" value="2"><span class="texto">2</span></label>
-        <label class="likert-opcion"><input type="radio" name="s2" value="3"><span class="texto">3</span></label>
-        <label class="likert-opcion"><input type="radio" name="s2" value="4"><span class="texto">4</span></label>
-        <label class="likert-opcion"><input type="radio" name="s2" value="5"><span class="texto">5</span></label>
+      </div>
+      <div class="test-nav">
+        <button type="button" class="btn-step btn-anterior" data-prev="2">← Atrás</button>
+        <button type="button" class="btn-step btn-siguiente" data-next="4">Continuar →</button>
+      </div>
     </div>
+
+    <div class="test-slide" data-step="4">
+      <div class="pregunta">
+        <span class="question-number">Pregunta 4</span>
+        <p class="question-title">
+          ¿Cómo te sientes AHORA si recibes un correo que te solicita acciones urgentes?
+        </p>
+        <div class="likert-grid">
+          <label class="likert-opcion">
+            <input type="radio" name="p4" value="1" required>
+            <span class="emoji">😎</span><span class="texto">Muy tranquilo(a)</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="p4" value="2">
+            <span class="emoji">😊</span><span class="texto">Tranquilo(a)</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="p4" value="3">
+            <span class="emoji">😐</span><span class="texto">Neutro</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="p4" value="4">
+            <span class="emoji">😥</span><span class="texto">Preocupado(a)</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="p4" value="5">
+            <span class="emoji">😩</span><span class="texto">Muy ansioso</span>
+          </label>
+        </div>
+      </div>
+      <div class="test-nav">
+        <button type="button" class="btn-step btn-anterior" data-prev="3">← Atrás</button>
+        <button type="button" class="btn-step btn-siguiente" data-next="5">Continuar →</button>
+      </div>
+    </div>
+
+    <div class="test-slide" data-step="5">
+      <div class="pregunta">
+        <span class="question-number">Pregunta 5</span>
+        <p class="question-title">
+          ¿Qué tan preparado(a) se siente para identificar fraudes por internet?
+        </p>
+        <div class="likert-grid">
+          <label class="likert-opcion">
+            <input type="radio" name="p5" value="1" required>
+            <span class="emoji">😎</span><span class="texto">Muy Preparado</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="p5" value="2">
+            <span class="emoji">😊</span><span class="texto">Preparado</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="p5" value="3">
+            <span class="emoji">😐</span><span class="texto">Neutro</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="p5" value="4">
+            <span class="emoji">😥</span><span class="texto">Poco Preparado</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="p5" value="5">
+            <span class="emoji">😩</span><span class="texto">Nada Preparado</span>
+          </label>
+        </div>
+      </div>
+      <div class="test-nav">
+        <button type="button" class="btn-step btn-anterior" data-prev="4">← Atrás</button>
+        <button type="button" class="btn-step btn-siguiente" data-next="6">Continuar →</button>
+      </div>
+    </div>
+
+    <div class="test-slide transition-slide" data-step="6">
+  <span class="transition-icon">🕵️‍♀️🕵️‍♂️</span>
+  <h2 class="transition-title">¡Misión principal completada!</h2>
+
+  <div class="transition-text">
+    <p>
+      Ya analizaste el correo sospechoso y completaste tu entrenamiento contra fraudes digitales.
+    </p>
+    <p style="margin-top: 8px;">
+      Ahora solo falta el <strong>último paso</strong> para cerrar el caso y obtener tu 
+      <strong>placa de detective digital</strong>:
+    </p>
+    <p style="margin-top: 8px;">
+      responder una <strong>breve encuesta de 4 preguntas</strong> sobre tu experiencia con el simulador.
+      No hay respuestas correctas ni incorrectas, es solo tu opinión.
+    </p>
+    <small style="display:block; margin-top:15px; color:#888;">
+      Esto toma menos de 1 minuto y nos ayuda a mejorar esta herramienta para otras personas.
+    </small>
+  </div>
+
+  <div class="test-nav" style="justify-content: center; margin-top: 20px;">
+    <button 
+      type="button" 
+      class="continuar-btn btn-siguiente" 
+      data-next="7" 
+      style="width: auto; padding: 12px 40px;"
+    >
+      Completar encuesta y obtener mi placa
+    </button>
+  </div>
 </div>
 
-<div class="pregunta">
-    <p>
-        3. ¿Qué tan clara fue la retroalimentación entregada?
-        <br>
-        <span style="font-size: 0.9em; color: #666; font-weight: normal;">
-            (1 = Confusa 👎 ... 5 = Muy Clara 👍)
-        </span>
-    </p>
-
-    <div class="likert-grid">
-        <label class="likert-opcion"><input type="radio" name="s3" value="1" required><span class="texto">1</span></label>
-        <label class="likert-opcion"><input type="radio" name="s3" value="2"><span class="texto">2</span></label>
-        <label class="likert-opcion"><input type="radio" name="s3" value="3"><span class="texto">3</span></label>
-        <label class="likert-opcion"><input type="radio" name="s3" value="4"><span class="texto">4</span></label>
-        <label class="likert-opcion"><input type="radio" name="s3" value="5"><span class="texto">5</span></label>
+    <div class="test-slide" data-step="7">
+      <div class="pregunta">
+        <div class="survey-badge">Encuesta de Satisfacción</div>
+        <span class="question-number">Pregunta 1 de 4</span>
+        <p class="question-title">
+          ¿Te gustaría una versión que te prepare para estafas en SMS o redes sociales?
+        </p>
+        <div class="options-inline">
+          <label class="opcion-card">
+            <input type="radio" name="s1" value="SI" required>
+            <span class="opcion-texto grande">Sí</span>
+          </label>
+          <label class="opcion-card">
+            <input type="radio" name="s1" value="NO">
+            <span class="opcion-texto grande">No</span>
+          </label>
+        </div>
+      </div>
+      <div class="test-nav">
+        <button type="button" class="btn-step btn-anterior" data-prev="6">← Atrás</button>
+        <button type="button" class="btn-step btn-siguiente" data-next="8">Continuar →</button>
+      </div>
     </div>
-</div>
 
-<div class="pregunta">
-    <p>
-        4. ¿Qué tan satisfecho(a) estás con la experiencia general?
-        <br>
-        <span style="font-size: 0.9em; color: #666; font-weight: normal;">
-            (1 = Insatisfecho 👎 ... 5 = Muy Satisfecho 👍)
-        </span>
-    </p>
+    <div class="test-slide" data-step="8">
+      <div class="pregunta">
+        <span class="question-number">Pregunta 2 de 4</span>
+        <p class="question-title">
+          ¿Qué tan útil te pareció el simulador?
+        </p>
+        <p class="question-subtitle">(1 = Nada útil ... 5 = Muy útil)</p>
 
-    <div class="likert-grid">
-        <label class="likert-opcion"><input type="radio" name="s4" value="1" required><span class="texto">1</span></label>
-        <label class="likert-opcion"><input type="radio" name="s4" value="2"><span class="texto">2</span></label>
-        <label class="likert-opcion"><input type="radio" name="s4" value="3"><span class="texto">3</span></label>
-        <label class="likert-opcion"><input type="radio" name="s4" value="4"><span class="texto">4</span></label>
-        <label class="likert-opcion"><input type="radio" name="s4" value="5"><span class="texto">5</span></label>
+        <div class="likert-grid">
+          <label class="likert-opcion">
+            <input type="radio" name="s2" value="1" required>
+            <span class="likert-number">1</span>
+            <span class="texto">Nada útil</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s2" value="2">
+            <span class="likert-number">2</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s2" value="3">
+            <span class="likert-number">3</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s2" value="4">
+            <span class="likert-number">4</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s2" value="5">
+            <span class="likert-number">5</span>
+            <span class="texto">Muy útil</span>
+          </label>
+        </div>
+      </div>
+      <div class="test-nav">
+        <button type="button" class="btn-step btn-anterior" data-prev="7">← Atrás</button>
+        <button type="button" class="btn-step btn-siguiente" data-next="9">Continuar →</button>
+      </div>
     </div>
-</div>
 
-         <!-- Botón enviar -->
-        <button type="submit" class="continuar-btn">Enviar resultados</button>
-    </form>
-            
+    <div class="test-slide" data-step="9">
+      <div class="pregunta">
+        <span class="question-number">Pregunta 3 de 4</span>
+        <p class="question-title">
+          ¿Qué tan clara fue la retroalimentación entregada?
+        </p>
+        <p class="question-subtitle">(1 = Confusa ... 5 = Muy clara)</p>
+
+        <div class="likert-grid">
+          <label class="likert-opcion">
+            <input type="radio" name="s3" value="1" required>
+            <span class="likert-number">1</span>
+            <span class="texto">Confusa</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s3" value="2">
+            <span class="likert-number">2</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s3" value="3">
+            <span class="likert-number">3</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s3" value="4">
+            <span class="likert-number">4</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s3" value="5">
+            <span class="likert-number">5</span>
+            <span class="texto">Muy clara</span>
+          </label>
+        </div>
+      </div>
+      <div class="test-nav">
+        <button type="button" class="btn-step btn-anterior" data-prev="8">← Atrás</button>
+        <button type="button" class="btn-step btn-siguiente" data-next="10">Continuar →</button>
+      </div>
+    </div>
+
+    <div class="test-slide" data-step="10">
+      <div class="pregunta">
+        <span class="question-number">Pregunta 4 de 4</span>
+        <p class="question-title">
+          ¿Qué tan satisfecho(a) estás con la experiencia general?
+        </p>
+        <p class="question-subtitle">(1 = Insatisfecho ... 5 = Muy satisfecho)</p>
+
+        <div class="likert-grid">
+          <label class="likert-opcion">
+            <input type="radio" name="s4" value="1" required>
+            <span class="likert-number">1</span>
+            <span class="texto">Insatisfecho</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s4" value="2">
+            <span class="likert-number">2</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s4" value="3">
+            <span class="likert-number">3</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s4" value="4">
+            <span class="likert-number">4</span>
+          </label>
+          <label class="likert-opcion">
+            <input type="radio" name="s4" value="5">
+            <span class="likert-number">5</span>
+            <span class="texto">Muy Satisfecho</span>
+          </label>
+        </div>
+      </div>
+      <div class="test-nav">
+        <button type="button" class="btn-step btn-anterior" data-prev="9">← Atrás</button>
+        <button type="submit" class="continuar-btn">Finalizar</button>
+      </div>
+    </div>
+
+  </form>
 </div>

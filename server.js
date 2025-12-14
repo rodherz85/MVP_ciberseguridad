@@ -131,7 +131,7 @@ app.post("/guardar-simulacion", async (req, res) => {
       
       "simulador.puntajeTotal": sumaPuntos
     });
-    res.redirect(`/posttest?uid=${userId}`); 
+    res.redirect(`/resultados?uid=${userId}`); 
   } catch (error) {
     console.error(error);
     res.send("Error al guardar los resultados de la simulación");
@@ -143,7 +143,7 @@ app.get("/posttest", (req, res) => {
   const userId = req.query.uid;
   res.render("posttest", { 
       title: "Test Final", 
-      bodyClass: "posttest",// <--- Esto activará el CSS de arriba
+      bodyClass: "posttest",
       userId: userId
   });
 });
@@ -170,7 +170,7 @@ app.post("/posttest", async (req, res) => {
       fechaFin: Date.now()
     });
     console.log(`Posttest y encuesta guardados para el usuario ${userId}. Puntaje: ${resultados.puntajeCognitivo}`);
-    res.redirect(`/resultados?uid=${userId}`);
+    res.redirect(`/final?uid=${userId}`);
   } catch (error) {
     console.error(error);
     res.send("Error al guardar las respuestas del posttest y la encuesta");
@@ -296,11 +296,36 @@ app.get("/resultados", async(req, res) => {
       bodyClass: "resultados",
       puntajeObtenido: puntajeTotal,
       puntajeMax: puntajeMax,
-      evidencias: evidencias
+      evidencias: evidencias,
+      userId: userId
     });
   } catch (error) {
     console.error(error);
     res.send("Error al obtener los resultados del usuario");
+  }
+});
+
+app.get("/final", async (req, res) => {
+  try {
+    const userId = req.query.uid;
+    
+    // Buscamos al usuario para poder comparar las notas en la vista
+    const usuario = await Usuario.findById(userId);
+
+    if (!usuario) {
+        return res.redirect("/"); // Si no existe, al inicio
+    }
+
+    res.render("final", { 
+        title: "Misión Cumplida",
+        bodyClass: "final", // Clase opcional para CSS específico
+        userId: userId,
+        usuario: usuario // Pasamos el objeto completo para usar usuario.pretest y usuario.posttest
+    });
+
+  } catch (error) {
+    console.error("Error cargando la vista final:", error);
+    res.redirect("/");
   }
 });
 

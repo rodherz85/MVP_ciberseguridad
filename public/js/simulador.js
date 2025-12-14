@@ -118,7 +118,6 @@ function registrarRespuesta(pistaId, esAcierto) {
         elementoPista.classList.remove("sospechoso");
     }
 
-    cerrarTooltip();
 
 }
 
@@ -137,22 +136,45 @@ window.finalizarSimulacion = function() {
 
 if (btnSi) {
     btnSi.onclick = () => {
+        if (!window.pistaActual) return;
+
+        // Mostrar feedback correcto
         tooltipFeedback.textContent = window.pistaActual.si;
         tooltipFeedback.classList.remove("oculto");
+
+        // Registrar acierto
         registrarRespuesta(window.pistaActual.id, true);
+
+        // Opcional: desactivar botones para que no responda dos veces
+        btnSi.disabled = true;
+        btnNo.disabled = true;
     };
 }
 
 if (btnNo) {
     btnNo.onclick = () => {
+        if (!window.pistaActual) return;
+
+        // Mostrar feedback incorrecto
         tooltipFeedback.textContent = window.pistaActual.no;
         tooltipFeedback.classList.remove("oculto");
+
+        // Registrar fallo
         registrarRespuesta(window.pistaActual.id, false);
+
+        // Opcional: desactivar botones para que no responda dos veces
+        btnSi.disabled = true;
+        btnNo.disabled = true;
     };
 }
 
 if (btnCerrar) {
-    btnCerrar.onclick = cerrarTooltip;
+    btnCerrar.onclick = () => {
+        // Volvemos a habilitar los botones para la próxima pista
+        btnSi.disabled = false;
+        btnNo.disabled = false;
+        cerrarTooltip();
+    };
 }
 
 /* =============================================================
@@ -386,4 +408,112 @@ document.addEventListener("DOMContentLoaded", () => {
   if (overlay && !overlay.classList.contains('oculto')) {
       abrirTutorialUI();
   }
+});
+
+/* =============================================================
+   LÓGICA DEL PRETEST/POSTTEST "PRO" (Auto-avance + Efectos)
+============================================================= */
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Verificamos si estamos en una página de test
+    const slides = Array.from(document.querySelectorAll(".test-slide"));
+    if (slides.length === 0) return; // Si no hay slides, no hacemos nada
+
+    const progressFill = document.getElementById("testProgressFill");
+    let currentIndex = 0;
+
+    // --- ACTUALIZAR BARRA DE PROGRESO ---
+    function actualizarBarra() {
+        if (!progressFill) return;
+        const porcentaje = ((currentIndex + 1) / slides.length) * 100;
+        progressFill.style.width = porcentaje + "%";
+    }
+
+    // --- MOSTRAR SLIDE (CON SCROLL ARRIBA) ---
+    function mostrarSlide(index) {
+        if (index < 0 || index >= slides.length) return;
+        
+        slides.forEach(s => s.classList.remove("activa"));
+        slides[index].classList.add("activa");
+        
+        currentIndex = index;
+        actualizarBarra();
+        
+        // Scroll suave hacia arriba (ideal para móviles)
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // --- VALIDACIÓN INTELIGENTE ---
+    function validarSlide(slide) {
+        if (!slide) return true;
+        let esValido = true;
+        
+        // 1. Validar Radios (Preguntas de selección única)
+        const radiosRequeridos = slide.querySelectorAll('input[type="radio"][required]');
+        if (radiosRequeridos.length > 0) {
+            const nombre = radiosRequeridos[0].name;
+            const marcado = slide.querySelector(`input[name="${nombre}"]:checked`);
+            if (!marcado) esValido = false;
+        }
+
+        // 2. Validar Checkboxes (Específico para Pregunta 2 - Múltiple)
+        // Buscamos si hay checkboxes en este slide
+        const checkboxes = slide.querySelectorAll('input[type="checkbox"]');
+        if (checkboxes.length > 0) {
+            // Verificamos si al menos uno está marcado
+            const algunoMarcado = Array.from(checkboxes).some(c => c.checked);
+            if (!algunoMarcado) esValido = false;
+        }
+
+        // --- MANEJO DE ERROR VISUAL (SHAKE) ---
+        if (!esValido) {
+            slide.classList.add('shake'); // Agrega la clase que hace temblar
+            setTimeout(() => slide.classList.remove('shake'), 500); // La quita después
+            return false;
+        }
+
+        return true;
+    }
+
+    // --- IR AL SIGUIENTE ---
+    function irAlSiguiente() {
+        const slideActual = slides[currentIndex];
+        // Validamos antes de movernos
+        if (!validarSlide(slideActual)) return; 
+        
+        mostrarSlide(currentIndex + 1);
+    }
+
+    // ================= EVENTOS =================
+
+    // 1. Botones "Continuar"
+    document.querySelectorAll(".btn-siguiente[data-next]").forEach((btn) => {
+        btn.addEventListener("click", function () {
+            irAlSiguiente();
+        });
+    });
+
+    // 2. Botones "Atrás"
+    document.querySelectorAll(".btn-anterior[data-prev]").forEach((btn) => {
+        btn.addEventListener("click", function () {
+            const pasoPrevio = parseInt(this.getAttribute("data-prev"), 10);
+            mostrarSlide(pasoPrevio - 1);
+        });
+    });
+
+    // 3. AUTO-AVANCE "GAMIFICADO" (Solo para radios)
+    const radioInputs = document.querySelectorAll('.test-slide input[type="radio"]');
+    radioInputs.forEach(radio => {
+        radio.addEventListener('change', () => {
+            // Solo auto-avanza si NO es la última pregunta
+            if (currentIndex < slides.length - 1) {
+                // Pequeña pausa para que el usuario vea qué marcó
+                setTimeout(() => {
+                    irAlSiguiente();
+                }, 350); 
+            }
+        });
+    });
+
+    // Iniciar en la primera diapositiva
+    mostrarSlide(0);
 });
