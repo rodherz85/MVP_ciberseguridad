@@ -517,3 +517,22 @@ document.addEventListener("DOMContentLoaded", function () {
     // Iniciar en la primera diapositiva
     mostrarSlide(0);
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const welcomeOverlay = document.getElementById("welcome-overlay");
+    const btnStart = document.getElementById("btn-start-experience");
+
+    // Validamos que existan los elementos para no causar errores
+    if (btnStart && welcomeOverlay) {
+        
+        btnStart.addEventListener("click", () => {
+            // 1. Agrega la clase CSS que baja la opacidad (desvanecimiento)
+            welcomeOverlay.classList.add("oculto");
+
+            // 2. Espera 0.5 segundos (lo que dura la animación) y lo quita de la pantalla
+            setTimeout(() => {
+                welcomeOverlay.style.display = "none";
+            }, 500);
+        });
+    }
+});

@@ -1,5 +1,54 @@
 <% layout('simulador_layout') %>
 
+<div id="welcome-overlay" class="welcome-overlay">
+    <div class="welcome-card">
+        
+        <h2>Bienvenida / Bienvenido. <br>Antes de empezar</h2>
+        
+        <p class="welcome-intro">
+            Esta es una actividad interactiva, similar a un juego, diseñada para ayudarte a reconocer fraudes digitales
+        </p>
+
+        <div class="welcome-steps">
+            <div class="step-item">
+                <div class="step-icon"><i class="fa-solid fa-clipboard-question"></i></div>
+                <div class="step-text">
+                    <strong>1. Preguntas Iniciales</strong>
+                    <small>Te haremos algunas preguntas breves para conocer cómo reaccionas hoy frente a posibles fraudes.</small>
+                </div>
+            </div>
+
+            <div class="step-line"></div>
+
+            <div class="step-item">
+                <div class="step-icon"><i class="fa-solid fa-gamepad"></i></div>
+                <div class="step-text">
+                    <strong>2. El Simulador</strong>
+                    <small>Un pequeño juego para entrenar tu vista de detective donde podrás entrenar tu capacidad para detectar señales sospechosas.</small>
+                </div>
+            </div>
+
+            <div class="step-line"></div>
+
+            <div class="step-item">
+                <div class="step-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                <div class="step-text">
+                    <strong>3. Preguntas Finales</strong>
+                    <small>Volveremos a preguntarte algunas cosas para saber si la experiencia te resultó útil.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="welcome-privacy">
+            <span><strong>Es anónimo:</strong> No hay respuestas incorrectas y tus datos solo se usan para la universidad.</span>
+        </div>
+
+        <button id="btn-start-experience" class="btn-comenzar-intro">
+            ¡Entendido, quiero empezar!
+        </button>
+    </div>
+</div>
+
 <div class="perfil-container">
     
     <div class="perfil-layout">
@@ -19,6 +68,7 @@
                 <ul style="text-align: left; margin-bottom: 20px; color: #555;">
                     <li><strong>1. Prueba de conocimientos básicos.</strong></li>
                     <li><strong>2. Análisis de un caso de estafa real.</strong></li>
+                    <li><strong>3. Confirmar tus conocimientos.</strong></li>
                 </ul>
                 <div class="nota-final">
                     Completa tu ficha a la derecha para recibir tu placa y comenzar el entrenamiento.
